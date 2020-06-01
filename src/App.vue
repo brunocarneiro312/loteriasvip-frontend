@@ -40,6 +40,7 @@
 <style lang="scss">
 
    @import './assets/css/tailblocks.css';
+   @import '~vue-toast-notification/dist/theme-default.css';
 
    * {
       padding: 0;

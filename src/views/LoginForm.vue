@@ -20,7 +20,6 @@
             </div>
             <div class="lg:w-2/6 md:w-1/2 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
                <h2 class="text-green-800 text-lg font-medium title-font mb-5">Acesse sua conta</h2>
-               <div class="error-message" v-if="response.error">Credenciais inválidas</div>
                <label class="text-green-700">E-mail</label>
                <input class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4" placeholder="" type="email" v-model="request.username">
                <label class="text-green-700">Senha</label>
@@ -60,11 +59,20 @@
                         localStorage.setItem('tokenData', response.data['token']);
                         eventbus.$emit('loginEvent', true);
                       }
-                      console.log(response.data);
+                      this.$toast.open({
+                          message: 'Usuário autenticado',
+                          type: 'success',
+                          position: 'top'
+                      });
                   })
                   .catch((error) => {
                       this.response.error = true;
                       this.response.errorCode = error.status;
+                      this.$toast.open({
+                          message: 'Erro de autenticação',
+                          type: 'error',
+                          position: 'top'
+                      });
                   })
             }
         }

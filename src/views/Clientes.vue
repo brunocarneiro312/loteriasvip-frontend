@@ -12,15 +12,13 @@
                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">#</th>
                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Nome</th>
                      <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Email</th>
-                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Telefone</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="cliente in clientes" :key="cliente.id">
-                     <td class="px-4 py-3">{{ cliente.id }}</td>
+                  <tr v-for="(cliente, index) in clientes" :key="index">
+                     <td class="px-4 py-3">{{ index + 1 }}</td>
                      <td class="px-4 py-3">{{ cliente.nome }}</td>
                      <td class="px-4 py-3">{{ cliente.email }}</td>
-                     <td class="px-4 py-3 text-lg text-gray-900">{{ cliente.telefone }}</td>
                   </tr>
                   <tr v-if="!clientes.length">
                      <td colspan="4">Não existem clientes cadastrados</td>
@@ -58,7 +56,11 @@
                     this.clientes = response.data;
                 })
                 .catch((error) => {
-                    this.response.error = error;
+                    switch (error.response.status) {
+                        case 401: this.response.error = 'Usuário não autenticado'; break;
+                        case 403: this.response.error = 'Privilégios insuficientes'; break;
+                        default: this.response.error = 'Houve um erro ao lisitar os clientes';
+                    }
                 })
             }
         },
