@@ -1,49 +1,34 @@
 <template>
    <div id="home">
-      <div class="file-upload-container">
-         <div class="form-upload">
-            <div class="flex-container space-between">
-               <div>
-                  <label for="input-file-compradores">Importar arquivo de compradores</label>
-                  <input type="file" id="input-file-compradores" name="file" @change="onFileChange($event, 1)"/>
-                  <div v-if="request.arquivoCompradores">
-                     Arquivo Selecionado: {{ request.arquivoCompradores.name }}
-                  </div>
+      <section class="text-gray-700 body-font">
+         <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+            <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+               <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-green-500">LoteriasVip</h1>
+               <span class="subheading text-green-700">A maneira inteligente de apostar!</span>
+               <div class="mt-4">
+                  <ul class="hero-list text-gray-500">
+                     <li> Administre os seus jogos de forma inteligente</li>
+                     <li> Verifique automaticamente se sua sequência foi premiada</li>
+                     <li> Gere sequências automaticamente</li>
+                     <li> Acompanhe o resultado dos jogos</li>
+                  </ul>
                </div>
-               <div>
-                  <button class="submit" @click="sendFile(request.arquivoCompradores)">Extrair</button>
-               </div>
-            </div>
-         </div>
-         <div class="form-upload">
-            <div class="flex-container space-between">
-               <div>
-                  <label for="input-file-lotofacil">Importar arquivo de jogos (Lotofacil)</label>
-                  <input type="file" id="input-file-lotofacil" @change="onFileChange($event, 2)"/>
-                  <div v-if="request.arquivoLotofacil">
-                     Arquivo Selecionado: {{ request.arquivoLotofacil.name }}
-                  </div>
-               </div>
-               <div>
-                  <button class="submit" @click="sendFile(request.arquivoLotofacil)">Extrair</button>
+               <p class="mb-8 leading-relaxed"></p>
+               <div class="flex justify-center">
+                  <button class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Saiba Mais</button>
                </div>
             </div>
-         </div>
-         <div class="form-upload">
-            <div class="flex-container space-between">
-               <div>
-                  <label for="input-file-lotomania">Importar arquivo de jogos (Lotomania)</label>
-                  <input type="file" id="input-file-lotomania" @change="onFileChange($event, 3)"/>
-                  <div v-if="request.arquivoLotomania">
-                     Arquivo Selecionado: {{ request.arquivoLotomania }}
-                  </div>
-               </div>
-               <div>
-                  <button class="submit" @click="sendFile(request.arquivoLotomania)">Extrair</button>
-               </div>
+            <div class="lg:w-2/6 md:w-1/2 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+               <h2 class="text-green-800 text-lg font-medium title-font mb-5">Acesse sua conta</h2>
+               <label class="text-green-700">E-mail</label>
+               <input class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4" placeholder="" type="email">
+               <label class="text-green-700">Senha</label>
+               <input class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4" placeholder="" type="password">
+               <button class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg mt-3">Entrar</button>
+               <a href="#" class="text-xs text-green-400 mt-3">Preciso de ajuda!</a>
             </div>
          </div>
-      </div>
+      </section>
    </div>
 </template>
 
@@ -118,41 +103,42 @@
 </script>
 
 <style lang="scss">
-   #home {
-      padding: 15px;
+   @import '../assets/css/tailblocks.css';
 
-      label {
-         display: block;
+   * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+   }
+
+   #logo {
+      animation-name: flip-diagonal-tr;
+      animation-duration: 1s;
+      animation-timing-function: ease;
+      animation-delay: 0s;
+      animation-iteration-count: 1;
+      animation-direction: normal;
+      animation-fill-mode: none;
+   }
+
+   .hero-list {
+      li::before {
+         content: "\2192";
       }
+   }
 
-      .form-upload {
-         padding: 15px;
-         box-shadow: 0 1px 10px #ddd;
-         margin-bottom: 25px;
+   .subheading {
+      font-size: 1.5em;
+   }
+
+   @keyframes flip-diagonal-tr {
+      0%{
+         -webkit-transform: rotate3d(1,1,0,0deg);
+         transform: rotate3d(1,1,0,0deg);
       }
-
-      .flex-container {
-         display: flex;
-         align-items: center;
+      100%{
+         -webkit-transform: rotate3d(1,1,0,180deg);
+         transform: rotate3d(1,1,0,360deg);
       }
-
-      .space-between {
-         justify-content: space-between;
-      }
-
-      .submit {
-         border: 0;
-         outline: 0;
-         padding: 10px;
-         background: dodgerblue;
-         color: white;
-         border-radius: 5px;
-         cursor: pointer;
-
-         &:hover {
-            opacity: .8;
-         }
-      }
-
    }
 </style>

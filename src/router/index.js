@@ -9,6 +9,7 @@ import Arquivos from "../views/Arquivos";
 import Jogos from "../views/Jogos";
 import Clientes from "../views/Clientes";
 import Perfil from "../views/Perfil";
+import Cadastro from "../views/Cadastro";
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,11 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/cadastro',
+        name: 'Cadastro',
+        component: Cadastro
     },
     {
         path: '/arquivos',
