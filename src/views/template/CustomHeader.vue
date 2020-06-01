@@ -6,12 +6,12 @@
             <span class="ml-3 text-xl" style="color: #788f5d">LoteriasVip</span>
          </a>
          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-            <!--               <a class="mr-5 hover:text-gray-900">First Link</a>-->
-            <!--               <a class="mr-5 hover:text-gray-900">Second Link</a>-->
-            <!--               <a class="mr-5 hover:text-gray-900">Third Link</a>-->
-            <!--               <a class="mr-5 hover:text-gray-900">Fourth Link</a>-->
+            <router-link to="/compradores" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Importar compradores</router-link>
+            <router-link to="/jogos" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Importar Jogos</router-link>
+            <router-link to="/clientes" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Clientes</router-link>
+            <router-link to="/sequencias" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Sequencias</router-link>
          </nav>
-         <router-link to="/cadastro" class="inline-flex items-center bg-green-700 border-0 py-1 px-3 focus:outline-none hover:bg-green-600 rounded text-white mt-4 md:mt-0">Cadastre-se
+         <router-link to="/cadastro" v-if="!isUserLoggedIn" class="inline-flex items-center bg-green-700 border-0 py-1 px-3 focus:outline-none hover:bg-green-600 rounded text-white mt-4 md:mt-0">Cadastre-se
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
                <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
@@ -21,8 +21,23 @@
 </template>
 
 <script>
+
+   import eventbus from "../../eventbus";
+
     export default {
         name: "CustomHeader",
+        data: function() {
+            return {
+               isUserLoggedIn: undefined,
+            }
+        },
+        created() {
+            if (localStorage.getItem('tokenData')) {
+                this.isUserLoggedIn = true;
+            }
+
+            eventbus.$on('loginEvent', () => this.isUserLoggedIn = true);
+        },
         methods: {
 
         }
