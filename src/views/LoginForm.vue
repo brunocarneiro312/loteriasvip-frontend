@@ -67,7 +67,6 @@
                 axios.post('http://localhost:8080/loteriasvip/auth', this.request)
                     .then((response) => {
                         if (!localStorage.tokenData) {
-                            console.log(response.data);
                             localStorage.setItem('tokenData', response.data['token']);
                             localStorage.setItem('userCodigo', response.data['codigo']);
                             localStorage.setItem('userEmail', response.data['email']);

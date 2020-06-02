@@ -7,11 +7,12 @@
          </a>
          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
             <router-link to="/" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Início</router-link>
-            <router-link to="/compradores" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Importar clientes</router-link>
-            <router-link to="/jogos" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Importar Jogos</router-link>
-            <router-link to="/clientes" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Clientes</router-link>
-            <router-link to="/sequencias" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Sequencias
-            </router-link>
+            <router-link to="/compradores" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Importar clientes</router-link>
+            <router-link to="/jogos" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Importar Jogos</router-link>
+            <router-link to="/clientes" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Clientes</router-link>
+            <router-link to="/sequencias" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Sequências</router-link>
+            <router-link to="/meus-jogos" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Meus Jogos</router-link>
+            <router-link to="/gerar-sequencia" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Gerar Sequência</router-link>
             <a href="" @click="logout" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Sair</a>
          </nav>
          <router-link to="/cadastro" v-if="!isUserLoggedIn"
@@ -22,6 +23,7 @@
                <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
          </router-link>
+         <span v-else class="text-green-500">{{ userEmail }}</span>
       </div>
    </header>
 </template>
@@ -35,14 +37,24 @@
         data: function () {
             return {
                 isUserLoggedIn: undefined,
+                userEmail: undefined,
+                isAdmin: false,
             }
         },
         created() {
             if (localStorage.getItem('tokenData')) {
                 this.isUserLoggedIn = true;
+                this.userEmail = localStorage.getItem('userEmail');
+                this.userRoles = localStorage.getItem('userRoles');
+                this.isAdmin = this.userRoles.includes('ROLE_ADMIN');
             }
 
-            eventbus.$on('loginEvent', () => this.isUserLoggedIn = true);
+            eventbus.$on('loginEvent', () => {
+                this.isUserLoggedIn = true;
+                this.userRoles = localStorage.getItem('userRoles');
+                this.userEmail = localStorage.getItem('userEmail');
+                this.isAdmin = this.userRoles && this.userRoles.includes('ROLE_ADMIN');
+            });
         },
         methods: {
             goHome() {
@@ -50,6 +62,9 @@
             },
             logout() {
                 localStorage.removeItem('tokenData');
+                localStorage.removeItem('userCodigo');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userRoles');
                 this.$toast.open({
                     message: 'Usuário deslogado',
                     type: 'success',

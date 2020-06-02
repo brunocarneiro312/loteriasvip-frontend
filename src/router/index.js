@@ -11,6 +11,8 @@ import Clientes from "../views/Clientes";
 import Perfil from "../views/Perfil";
 import Cadastro from "../views/Cadastro";
 import Sequencias from "../views/Sequencias";
+import MeusJogos from "../views/MeusJogos";
+import GerarSequencia from "../views/template/GerarSequencia";
 
 Vue.use(VueRouter)
 
@@ -44,6 +46,16 @@ const routes = [
         path: '/clientes',
         name: 'Clientes',
         component: Clientes
+    },
+    {
+        path: '/meus-jogos',
+        name: 'MeusJogos',
+        component: MeusJogos
+    },
+    {
+        path: '/gerar-sequencia',
+        name: 'GerarSequencia',
+        component: GerarSequencia
     },
     {
         path: '/perfil',

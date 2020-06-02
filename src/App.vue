@@ -1,7 +1,6 @@
 <template>
    <div id="app">
       <CustomHeader />
-      <div>=> {{ userData }}</div>
       <div>
          <router-view></router-view>
       </div>
