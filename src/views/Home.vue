@@ -82,6 +82,15 @@
             }
             eventbus.$on('loginEvent', () => {
                 this.isUserLoggedIn = true;
+                axios.get('http://localhost:8080/loteriasvip/api/v1/resumo', {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
+                    }
+                }).then((response) => {
+                    this.response.qtdJogos = response.data['qtdJogos'];
+                    this.response.qtdClientes = response.data['qtdClientes'];
+                    this.response.qtdPremios = response.data['qtdPremios'];
+                })
             });
         },
         methods: {

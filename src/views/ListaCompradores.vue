@@ -100,10 +100,10 @@
                 }).catch((error) => {
                     switch (error.response.status) {
                         case 401:
-                            this.$toast.open({message: 'Usuário não autenticado', type: 'error', position: 'top'});
+                            this.$toast.open({message: 'Usuário não autenticado', type: 'error', position: 'top-right'});
                             break;
                         case 403:
-                            this.$toast.open({message: 'Privilégios insuficientes', type: 'error', position: 'top'});
+                            this.$toast.open({message: 'Privilégios insuficientes', type: 'error', position: 'top-right'});
                             break;
                         default:
                             this.$toast.open({

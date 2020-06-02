@@ -1,6 +1,7 @@
 <template>
    <div id="app">
       <CustomHeader />
+      <div>=> {{ userData }}</div>
       <div>
          <router-view></router-view>
       </div>
@@ -16,7 +17,8 @@
         components: {CustomHeader},
         data: function () {
             return {
-                isUserLoggedIn: false
+                isUserLoggedIn: false,
+                userData: undefined,
             }
         },
         created() {
@@ -26,6 +28,7 @@
             }
 
             eventbus.$on('loginEvent', (value) => {
+                this.userData = localStorage.getItem('userData');
                 this.isUserLoggedIn = value;
             });
 
