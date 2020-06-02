@@ -15,7 +15,7 @@
                      <h1 class="heading-text">Lotofacil</h1>
                      <div>
                         <label class="file">
-                           <input type="file" name="file" class="inputfile" id="file" @change="setLotofacilFile" />
+                           <input type="file" name="file" class="inputfile" id="file" @change="setLotofacilFile"/>
                         </label>
                      </div>
                      <div class="flex">
@@ -53,10 +53,47 @@
             </div>
          </div>
       </section>
+      <section class="text-gray-700 body-font">
+         <div class="container mx-auto flex items-center justify-center flex-col">
+            <div style="overflow-x: auto; max-width: 80vw">
+               <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">
+                  <thead>
+                  <tr>
+                     <th
+                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">
+                        #
+                     </th>
+                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                        Tipo
+                     </th>
+                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                        Premiado
+                     </th>
+                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                        Sequencia
+                     </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="jogo in response.jogos" :key="jogo.codigoJogo">
+                     <td class="px-4 py-3">{{ jogo.codigoJogo }}</td>
+                     <td class="px-4 py-3">{{ jogo.tipoJogo }}</td>
+                     <td class="px-4 py-3">{{ jogo.premiado }}</td>
+                     <td class="px-4 py-3">{{ jogo.sequencia }}</td>
+                  </tr>
+                  <tr v-if="!response.jogos.length">
+                     <td colspan="4">Não existem jogos cadastrados</td>
+                  </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </section>
    </div>
 </template>
 
 <script>
+
     import axios from "axios";
 
     export default {
@@ -71,9 +108,13 @@
                     },
                     lotomania: {
                         msg: undefined
-                    }
+                    },
+                    jogos: [],
                 }
             }
+        },
+        created() {
+            this.listarJogos();
         },
         methods: {
             importarLotofacil() {
@@ -90,10 +131,18 @@
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                     }
                 }).then(() => {
-                    this.response.lotofacil.msg = "Arquivo importado com sucesso!";
-                }).catch((error) => {
-                    this.response.lotofacil.msg = "Erro ao importar arquivo.";
-                    console.log(error);
+                    this.$toast.open({
+                        message: 'Arquivo importado com sucesso',
+                        type: 'success',
+                        position: 'top-right'
+                    });
+                    this.listarJogos();
+                }).catch(() => {
+                    this.$toast.open({
+                        message: 'Erro ao importar arquivo',
+                        type: 'error',
+                        position: 'top-right'
+                    });
                 })
             },
 
@@ -111,9 +160,35 @@
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                     }
                 }).then(() => {
-                    this.response.lotomania.msg = "Arquivo importado com sucesso!";
+                    this.$toast.open({
+                        message: 'Arquivo importado com sucesso!',
+                        type: 'success',
+                        position: 'top-right'
+                    });
+                    this.listarJogos();
                 }).catch(() => {
-                    this.response.lotomania.msg = "Erro ao importar arquivo";
+                    this.$toast.open({
+                        message: 'Erro ao importar arquivo',
+                        type: 'error',
+                        position: 'top-right'
+                    });
+                })
+            },
+
+            listarJogos() {
+                axios.get('http://localhost:8080/loteriasvip/api/v1/jogos', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
+                    }
+                }).then((response) => {
+                    this.response.jogos = response.data;
+                }).catch(() => {
+                    this.$toast.open({
+                        message: 'Houve um erro ao listar os jogos',
+                        type: 'error',
+                        position: 'top-right'
+                    });
                 })
             },
 
@@ -143,5 +218,9 @@
 
    .heading-text {
       font-size: 2em;
+   }
+
+   #toolbar {
+      margin: 0;
    }
 </style>

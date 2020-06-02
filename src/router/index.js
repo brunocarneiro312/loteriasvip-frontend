@@ -10,6 +10,7 @@ import Jogos from "../views/Jogos";
 import Clientes from "../views/Clientes";
 import Perfil from "../views/Perfil";
 import Cadastro from "../views/Cadastro";
+import Sequencias from "../views/Sequencias";
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
         path: '/jogos',
         name: 'Jogos',
         component: Jogos
+    },
+    {
+        path: '/sequencias',
+        name: 'Sequencias',
+        component: Sequencias
     },
     {
         path: '/clientes',

@@ -8,7 +8,6 @@
 </template>
 
 <script>
-
     import eventbus from "./eventbus";
     import CustomHeader from "./views/template/CustomHeader";
 
@@ -41,6 +40,7 @@
 
    @import './assets/css/tailblocks.css';
    @import '~vue-toast-notification/dist/theme-default.css';
+   @import "./assets/css/bootstrap-table.min.css";
 
    * {
       padding: 0;

@@ -70,6 +70,11 @@
                     .then((response) => {
                         this.response.msg = response.data;
                         this.$router.push("/");
+                        this.$toast.open({
+                            message: 'Usuário cadastrado com sucesso!',
+                            type: 'success',
+                            position: 'top-right'
+                        });
                     })
                     .catch((error) => {
                         this.response.msg = error;

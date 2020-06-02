@@ -62,7 +62,7 @@
                       this.$toast.open({
                           message: 'Usuário autenticado',
                           type: 'success',
-                          position: 'top'
+                          position: 'top-right'
                       });
                   })
                   .catch((error) => {
@@ -71,7 +71,7 @@
                       this.$toast.open({
                           message: 'Erro de autenticação',
                           type: 'error',
-                          position: 'top'
+                          position: 'top-right'
                       });
                   })
             }

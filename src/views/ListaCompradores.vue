@@ -4,11 +4,11 @@
          <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
             <div class="text-center lg:w-2/3 w-full">
                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Importar lista de
-                  compradores</h1>
+                  clientes</h1>
                <p class="mb-8 leading-relaxed">Selecione o arquivo contendo a lista de compradores para realizar a
                   importação e clique em <b>importar</b></p>
-               <p class="mb-8 leading-relaxed">O arquivo de compradores deve ser uma planilha no formato <b>.xlsx</b> e
-                  deve obedecer o template</p>
+               <p class="mb-8 leading-relaxed">O arquivo de clientes deve ser uma planilha no formato <b>.xlsx</b> e
+                  deve obedecer o <b class="text-green-500" style="text-decoration: underline; cursor: pointer">template</b></p>
                <div>
                   <label class="file">
                      <input type="file" name="file" id="file" class="inputfile" @change="setCompradoresFile"/>
@@ -27,6 +27,42 @@
             </div>
          </div>
       </section>
+      <section class="text-gray-700 body-font">
+         <div class="container mx-auto flex items-center justify-center flex-col">
+            <div style="overflow-x: auto; max-width: 80vw">
+               <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">
+                  <thead>
+                  <tr>
+                     <th
+                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">
+                        #
+                     </th>
+                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                        Tipo
+                     </th>
+                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                        Premiado
+                     </th>
+                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                        Sequencia
+                     </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="comprador in response.compradores" :key="comprador.codigo">
+                     <td class="px-4 py-3">{{ comprador.codigo }}</td>
+                     <td class="px-4 py-3">{{ comprador.nome }}</td>
+                     <td class="px-4 py-3">{{ comprador.email }}</td>
+                     <td class="px-4 py-3">{{ comprador.telefone }}</td>
+                  </tr>
+                  <tr v-if="!response.compradores.length">
+                     <td colspan="4">Não existem compradores cadastrados</td>
+                  </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </section>
    </div>
 </template>
 
@@ -40,9 +76,7 @@
             return {
                 compradoresFile: undefined,
                 response: {
-                    compradores: {
-                        msg: undefined
-                    },
+                    compradores: []
                 }
             }
         },
@@ -62,6 +96,7 @@
                     }
                 }).then(() => {
                     this.$toast.open({message: 'Arquivo importado com sucesso!', type: 'success', position: 'top'});
+                    this.listarCompradores();
                 }).catch((error) => {
                     switch (error.response.status) {
                         case 401:
@@ -82,9 +117,26 @@
             setCompradoresFile(event) {
                 this.compradoresFile = event.target.files[0];
             },
+
+            listarCompradores() {
+                axios.get('http://localhost:8080/loteriasvip/api/v1/clientes/compradores', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
+                    }
+                }).then((response) => {
+                    this.response.compradores = response.data;
+                }).catch(() => {
+                    this.$toast.open({
+                        message: 'Houve um erro ao listar os compradores',
+                        type: 'error',
+                        position: 'top-right'
+                    });
+                })
+            }
         },
         created() {
-
+            this.listarCompradores();
         }
     }
 </script>

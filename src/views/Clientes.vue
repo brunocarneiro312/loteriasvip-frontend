@@ -9,9 +9,16 @@
                <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">
                   <thead>
                   <tr>
-                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">#</th>
-                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Nome</th>
-                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Email</th>
+                     <th
+                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">
+                        #
+                     </th>
+                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                        Nome
+                     </th>
+                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                        Email
+                     </th>
                   </tr>
                   </thead>
                   <tbody>
@@ -33,11 +40,11 @@
 
 <script>
 
-   import axios from 'axios';
+    import axios from 'axios';
 
     export default {
         name: "Clientes",
-        data: function() {
+        data: function () {
             return {
                 clientes: [],
                 response: {
@@ -52,16 +59,33 @@
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                     }
                 })
-                .then((response) => {
-                    this.clientes = response.data;
-                })
-                .catch((error) => {
-                    switch (error.response.status) {
-                        case 401: this.response.error = 'Usuário não autenticado'; break;
-                        case 403: this.response.error = 'Privilégios insuficientes'; break;
-                        default: this.response.error = 'Houve um erro ao lisitar os clientes';
-                    }
-                })
+                    .then((response) => {
+                        this.clientes = response.data;
+                    })
+                    .catch((error) => {
+                        switch (error.response.status) {
+                            case 401:
+                                this.$toast.open({
+                                    message: 'Acesso não autorizado',
+                                    type: 'error',
+                                    position: 'top-right'
+                                });
+                                break;
+                            case 403:
+                                this.$toast.open({
+                                    message: 'Privilégios insuficientes',
+                                    type: 'error',
+                                    position: 'top-right'
+                                });
+                                break;
+                            default:
+                                this.$toast.open({
+                                    message: 'Houve um erro ao listar os clientes',
+                                    type: 'error',
+                                    position: 'top-right'
+                                });
+                        }
+                    })
             }
         },
         created() {
