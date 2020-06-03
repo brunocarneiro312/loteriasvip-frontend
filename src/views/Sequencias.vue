@@ -15,7 +15,7 @@
                   <p class="leading-relaxed text-base">Distribui as sequências que não tem cliente associado entre o total de clientes de forma igualitária.</p>
                   <p class="leading-relaxed text-base">Fórmula: Total de Jogos / Total de Clientes</p>
                   <p class="leading-relaxed text-base text-gray-500">Ex: Se houver 10 clientes e 100 jogos, então cada cliente receberá 10 jogos.</p>
-                  <button class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">Distribuir Igualmente</button>
+                  <button @click="distribuirIgualmente" class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">Distribuir Igualmente</button>
                </div>
                <div class="sm:w-1/2 mb-10 px-4">
                   <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Distribuição Avulsa</h2>
@@ -32,34 +32,63 @@
                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Prévia</h1>
                <p class="leading-relaxed text-base">Visualize quais jogos serão enviados para quais clientes.</p>
             </div>
+            <div class="mt-3">
+               <div v-if="previa.length">
+                  <div>
+                     <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">
+                        <thead>
+                        <tr>
+                           <th
+                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">
+                              #
+                           </th>
+                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                              Nome
+                           </th>
+                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                              Email
+                           </th>
+                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                              Jogos
+                           </th>
+<!--                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">-->
+<!--                              Sequência-->
+<!--                           </th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(p, index) in previa" :key="index">
+                           <td class="px-4 py-3">{{ index + 1 }}</td>
+                           <td class="px-4 py-3">{{ p.nome }}</td>
+                           <td class="px-4 py-3">{{ p.email }}</td>
+                           <td>
+                              <table class="table-auto w-full text-left whitespace-no-wrap">
+                                 <thead>
+                                    <tr>
+                                       <td>Sequências</td>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr v-for="jogo in p.jogos" :key="jogo.codigoJogo">
+                                       <td>{{ jogo.sequencia }}</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr v-if="!clientes.length">
+                           <td colspan="4">Não existem clientes cadastrados</td>
+                        </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <div v-else>
+                  <span class="text-gray-500">Nenhum tipo de distribuição foi selecionado.</span>
+               </div>
+            </div>
             <div>
                <button @click="confirmarDistribuicao" class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">Confirmar distribuição</button>
-<!--               <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">-->
-<!--                  <thead>-->
-<!--                  <tr>-->
-<!--                     <th-->
-<!--                        class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">-->
-<!--                        #-->
-<!--                     </th>-->
-<!--                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">-->
-<!--                        Nome-->
-<!--                     </th>-->
-<!--                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">-->
-<!--                        Email-->
-<!--                     </th>-->
-<!--                  </tr>-->
-<!--                  </thead>-->
-<!--                  <tbody>-->
-<!--                  <tr v-for="(cliente, index) in clientes" :key="index">-->
-<!--                     <td class="px-4 py-3">{{ index + 1 }}</td>-->
-<!--                     <td class="px-4 py-3">{{ cliente.nome }}</td>-->
-<!--                     <td class="px-4 py-3">{{ cliente.email }}</td>-->
-<!--                  </tr>-->
-<!--                  <tr v-if="!clientes.length">-->
-<!--                     <td colspan="4">Não existem clientes cadastrados</td>-->
-<!--                  </tr>-->
-<!--                  </tbody>-->
-<!--               </table>-->
             </div>
          </div>
       </section>
@@ -75,6 +104,7 @@
             return {
                 clientes: [],
                 jogosSemDono: [],
+                previa: [],
                 response: {
                     error: undefined
                 },
@@ -85,7 +115,7 @@
             }
         },
         created() {
-            this.distribuirIgualmente();
+
         },
         methods: {
             async listarClientes() {
@@ -146,6 +176,22 @@
                             "codigoJogo": j.codigoJogo
                         });
                     });
+
+                    let countJogoVigente = 0;
+
+                    for (let i = 0; i < qtdClientes; i++) {
+                        let cliente = {
+                            nome: this.clientes[i].nome,
+                            email: this.clientes[i].email,
+                            jogos: []
+                        };
+
+                        for (let x = 0; x < qtdJogosPorCliente; x++) {
+                           cliente.jogos.push(this.jogosSemDono[countJogoVigente++]);
+                        }
+
+                        this.previa.push(cliente);
+                    }
                 }
             },
 
@@ -158,9 +204,19 @@
                     })
                         .then((response) => {
                             console.log(response.data);
+                            this.$toast.open({
+                                message: 'Distribuição realizada com sucesso!',
+                                type: 'success',
+                                position: 'top-right'
+                            })
                         })
                         .catch((error) => {
                             console.log(error);
+                            this.$toast.open({
+                                message: 'Erro ao realizar a distribuição.',
+                                type: 'success',
+                                position: 'top-right'
+                            })
                         });
                 }
             }
