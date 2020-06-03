@@ -95,7 +95,7 @@
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                     }
                 }).then(() => {
-                    this.$toast.open({message: 'Arquivo importado com sucesso!', type: 'success', position: 'top'});
+                    this.$toast.open({message: 'Arquivo importado com sucesso!', type: 'success', position: 'top-right'});
                     this.listarCompradores();
                 }).catch((error) => {
                     switch (error.response.status) {

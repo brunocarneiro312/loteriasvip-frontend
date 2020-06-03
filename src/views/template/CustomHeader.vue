@@ -39,6 +39,7 @@
                 isUserLoggedIn: undefined,
                 userEmail: undefined,
                 isAdmin: false,
+                esconderBotaoCadastro: false
             }
         },
         created() {
@@ -54,6 +55,10 @@
                 this.userRoles = localStorage.getItem('userRoles');
                 this.userEmail = localStorage.getItem('userEmail');
                 this.isAdmin = this.userRoles && this.userRoles.includes('ROLE_ADMIN');
+            });
+
+            eventbus.$on('esconderBotaoCadastro', () => {
+                this.esconderBotaoCadastro = true;
             });
         },
         methods: {

@@ -43,6 +43,8 @@
 <script>
     import axios from "axios";
 
+    import eventbus from "../eventbus";
+
     export default {
         name: "Cadastro",
         data: function() {
@@ -59,6 +61,9 @@
                 },
                 confirmSenha: undefined,
             }
+        },
+        created() {
+            eventbus.$emit('esconderBotaoCadastro');
         },
         methods: {
             cadastrar() {
