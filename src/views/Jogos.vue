@@ -20,9 +20,16 @@
                      </div>
                      <div class="flex">
                         <button
+                           v-if="!isLoading"
                            @click="importarLotofacil"
                            class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg">
                            Importar
+                        </button>
+                        <button
+                           v-if="isLoading"
+                           disabled="true"
+                           class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg">
+                           Carregando...
                         </button>
                      </div>
                      <div v-if="response.lotofacil.msg">
@@ -40,9 +47,16 @@
                      </div>
                      <div class="flex">
                         <button
+                           v-if="!isLoading"
                            @click="importarLotomania"
                            class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg">
                            Importar
+                        </button>
+                        <button
+                           v-if="isLoading"
+                           disabled="true"
+                           class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg">
+                           Carregando...
                         </button>
                      </div>
                      <div v-if="response.lotomania.msg">
@@ -100,6 +114,7 @@
         name: "Jogos",
         data: function () {
             return {
+                isLoading: false,
                 lotofacilFile: undefined,
                 lotomaniaFile: undefined,
                 response: {
@@ -125,6 +140,7 @@
                 let formData = new FormData();
                 formData.append("file", this.lotofacilFile);
 
+                this.isLoading = true;
                 axios.post('http://localhost:8080/loteriasvip/api/v1/upload/lotofacil', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -143,6 +159,8 @@
                         type: 'error',
                         position: 'top-right'
                     });
+                }).finally(() => {
+                    this.isLoading = false;
                 })
             },
 
@@ -154,6 +172,7 @@
                 let formData = new FormData();
                 formData.append("file", this.lotomaniaFile);
 
+                this.isLoading = true;
                 axios.post('http://localhost:8080/loteriasvip/api/v1/upload/lotomania', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -172,6 +191,8 @@
                         type: 'error',
                         position: 'top-right'
                     });
+                }).finally(() => {
+                    this.isLoading = false;
                 })
             },
 

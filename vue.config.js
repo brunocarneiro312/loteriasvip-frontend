@@ -6,7 +6,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/loteriasvip': {
-                target: 'http://localhost:8080/loteriasvip',
+                target: 'http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip',
                 ws: true,
                 changeOrigin: true
             },

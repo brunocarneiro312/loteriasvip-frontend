@@ -17,8 +17,11 @@
                </div>
                <div class="flex justify-center">
                   <button @click="importarCompradores"
-                          class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg">
+                          class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg" v-if="!isLoading">
                      Importar
+                  </button>
+                  <button disabled="true" class="inline-flex text-white bg-green-300 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg" v-if="isLoading">
+                     Carregando...
                   </button>
                </div>
                <div v-if="response.compradores.msg">
@@ -74,6 +77,7 @@
         name: "ListaCompradores",
         data: function () {
             return {
+                isLoading: false,
                 compradoresFile: undefined,
                 response: {
                     compradores: []
@@ -89,6 +93,7 @@
                 let formData = new FormData();
                 formData.append("file", this.compradoresFile);
 
+                this.isLoading = true;
                 axios.post('http://localhost:8080/loteriasvip/api/v1/upload/compradores', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -111,6 +116,8 @@
                                 type: 'error'
                             });
                     }
+                }).finally(() => {
+                    this.isLoading = false;
                 })
             },
 
@@ -119,6 +126,7 @@
             },
 
             listarCompradores() {
+                this.isLoading = true;
                 axios.get('http://localhost:8080/loteriasvip/api/v1/clientes/compradores', {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -132,6 +140,8 @@
                         type: 'error',
                         position: 'top-right'
                     });
+                }).finally(() => {
+                    this.isLoading = false;
                 })
             }
         },
