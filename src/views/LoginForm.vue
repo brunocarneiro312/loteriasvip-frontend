@@ -33,8 +33,15 @@
                   class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4"
                   placeholder="" type="password" v-model="request.password">
                <button
+                  v-if="!isLoading"
                   class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg mt-3"
                   @click="login">Entrar
+               </button>
+               <button
+                  v-if="isLoading"
+                  disabled
+                  class="text-white bg-green-300 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg mt-3">
+                  Aguarde...
                </button>
                <a href="#" class="text-xs text-green-400 mt-3">Preciso de ajuda!</a>
             </div>
@@ -52,6 +59,7 @@
         name: "LoginForm",
         data: function () {
             return {
+                isLoading: false,
                 request: {
                     username: undefined,
                     password: undefined,
@@ -64,6 +72,7 @@
         },
         methods: {
             login() {
+                this.isLoading = true;
                 axios.post('http://localhost:8080/loteriasvip/auth', this.request)
                     .then((response) => {
                         if (!localStorage.tokenData) {
@@ -87,6 +96,9 @@
                             type: 'error',
                             position: 'top-right'
                         });
+                    })
+                    .finally(() => {
+                     this.isLoading = false;
                     })
             }
         }
