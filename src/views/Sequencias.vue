@@ -125,7 +125,7 @@
         },
         methods: {
             async listarClientes() {
-                await axios.get("http://localhost:8080/loteriasvip/api/v1/clientes", {
+                await axios.get("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/clientes", {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                     }
@@ -143,7 +143,7 @@
                  })
             },
             async listarJogosSemDono() {
-                await axios.get("http://localhost:8080/loteriasvip/api/v1/jogos/listarJogosSemDono", {
+                await axios.get("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/listarJogosSemDono", {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                     }
@@ -245,7 +245,7 @@
                 if (this.mode === 1) {
 
                    if (this.jogosSemDono.length && this.clientes.length) {
-                       axios.post("http://localhost:8080/loteriasvip/api/v1/jogos/distribuirJogosSemDono", undefined,{
+                       axios.post("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/distribuirJogosSemDono", undefined,{
                            headers: {
                                'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                            }
@@ -270,7 +270,7 @@
                 }
                 if (this.mode === 2) {
                     if (this.jogosSemDono.length && this.clientes.length) {
-                        axios.post("http://localhost:8080/loteriasvip/api/v1/jogos/distribuirJogosSemDonoAvulso/" + this.qtdJogosPorPessoa, undefined,{
+                        axios.post("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/distribuirJogosSemDonoAvulso/" + this.qtdJogosPorPessoa, undefined,{
                             headers: {
                                 'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                             }

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.dfe08a004eb975f780ebf8212aa82f81.js"
+  "/precache-manifest.4fbf1987f91d135d10dfe16786df27a5.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "workana-loteriasvip-frontend"});

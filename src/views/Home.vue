@@ -94,7 +94,7 @@
 
             if (localStorage.getItem('tokenData') && this.isAdmin) {
                 this.isUserLoggedIn = true;
-                axios.get('http://localhost:8080/loteriasvip/api/v1/resumo', {
+                axios.get('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/resumo', {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                     }
@@ -105,7 +105,7 @@
                 })
             }
             else if (localStorage.getItem('tokenData')) {
-                axios.get('http://localhost:8080/loteriasvip/api/v1/jogos/cliente', {
+                axios.get('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/cliente', {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                     }
@@ -119,7 +119,7 @@
                 this.isAdmin = this.userRoles && this.userRoles.includes('ROLE_ADMIN');
 
                 if (this.isAdmin) {
-                   axios.get('http://localhost:8080/loteriasvip/api/v1/resumo', {
+                   axios.get('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/resumo', {
                        headers: {
                            'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                        }
@@ -130,7 +130,7 @@
                    })
                 }
                 else {
-                    axios.get('http://localhost:8080/loteriasvip/api/v1/jogos/cliente', {
+                    axios.get('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/cliente', {
                         headers: {
                             'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                         }
@@ -169,13 +169,13 @@
                 let endpoint = undefined;
 
                 if (this.fileType === 1) {
-                    endpoint = 'http://localhost:8080/loteriasvip/api/v1/upload/compradores';
+                    endpoint = 'http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/upload/compradores';
                 }
                 if (this.fileType === 2) {
-                    endpoint = 'http://localhost:8080/loteriasvip/api/v1/upload/lotofacil';
+                    endpoint = 'http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/upload/lotofacil';
                 }
                 if (this.fileType === 3) {
-                    endpoint = 'http://localhost:8080/loteriasvip/api/v1/upload/lotomania';
+                    endpoint = 'http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/upload/lotomania';
                 }
 
                 axios.post(endpoint, formData, {

@@ -94,7 +94,7 @@
                 formData.append("file", this.compradoresFile);
 
                 this.isLoading = true;
-                axios.post('http://localhost:8080/loteriasvip/api/v1/upload/compradores', formData, {
+                axios.post('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/upload/compradores', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
@@ -127,7 +127,7 @@
 
             listarCompradores() {
                 this.isLoading = true;
-                axios.get('http://localhost:8080/loteriasvip/api/v1/clientes/compradores', {
+                axios.get('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/clientes/compradores', {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')

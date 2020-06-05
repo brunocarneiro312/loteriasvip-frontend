@@ -36,7 +36,7 @@
             }
         },
         created() {
-            axios.get("http://localhost:8080/loteriasvip/api/v1/jogos/lotomania", {
+            axios.get("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/lotomania", {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
                 }

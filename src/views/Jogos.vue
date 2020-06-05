@@ -141,7 +141,7 @@
                 formData.append("file", this.lotofacilFile);
 
                 this.isLoading = true;
-                axios.post('http://localhost:8080/loteriasvip/api/v1/upload/lotofacil', formData, {
+                axios.post('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/upload/lotofacil', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
@@ -173,7 +173,7 @@
                 formData.append("file", this.lotomaniaFile);
 
                 this.isLoading = true;
-                axios.post('http://localhost:8080/loteriasvip/api/v1/upload/lotomania', formData, {
+                axios.post('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/upload/lotomania', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
@@ -197,7 +197,7 @@
             },
 
             listarJogos() {
-                axios.get('http://localhost:8080/loteriasvip/api/v1/jogos', {
+                axios.get('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos', {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': 'Bearer ' + localStorage.getItem('tokenData')

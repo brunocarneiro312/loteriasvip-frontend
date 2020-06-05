@@ -73,7 +73,7 @@
         methods: {
             login() {
                 this.isLoading = true;
-                axios.post('http://localhost:8080/loteriasvip/auth', this.request)
+                axios.post('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/auth', this.request)
                     .then((response) => {
                         if (!localStorage.tokenData) {
                             localStorage.setItem('tokenData', response.data['token']);
