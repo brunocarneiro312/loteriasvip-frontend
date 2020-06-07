@@ -4,9 +4,10 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import VueToast from 'vue-toast-notification';
-
+import apiCaller from "./apiCaller";
 Vue.config.productionTip = false;
 
+Vue.use(apiCaller);
 Vue.use(VueToast);
 
 new Vue({

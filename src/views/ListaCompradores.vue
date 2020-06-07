@@ -70,8 +70,7 @@
 </template>
 
 <script>
-
-    import axios from 'axios';
+    import apiCaller from "../apiCaller";
 
     export default {
         name: "ListaCompradores",
@@ -94,15 +93,12 @@
                 formData.append("file", this.compradoresFile);
 
                 this.isLoading = true;
-                axios.post('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/upload/compradores', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                    }
-                }).then(() => {
-                    this.$toast.open({message: 'Arquivo importado com sucesso!', type: 'success', position: 'top-right'});
-                    this.listarCompradores();
-                }).catch((error) => {
+                apiCaller.uploadCompradores(formData)
+                  .then(() => {
+                      this.listarCompradores();
+                      this.$toast.open({message: 'Arquivo importado com sucesso!', type: 'success', position: 'top-right'})
+                  })
+                .catch((error) => {
                     switch (error.response.status) {
                         case 401:
                             this.$toast.open({message: 'Usuário não autenticado', type: 'error', position: 'top-right'});
@@ -116,9 +112,8 @@
                                 type: 'error'
                             });
                     }
-                }).finally(() => {
-                    this.isLoading = false;
                 })
+                .finally(() => this.isLoading = false);
             },
 
             setCompradoresFile(event) {
@@ -127,22 +122,16 @@
 
             listarCompradores() {
                 this.isLoading = true;
-                axios.get('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/clientes/compradores', {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                    }
-                }).then((response) => {
-                    this.response.compradores = response.data;
-                }).catch(() => {
-                    this.$toast.open({
-                        message: 'Houve um erro ao listar os compradores',
-                        type: 'error',
-                        position: 'top-right'
-                    });
-                }).finally(() => {
-                    this.isLoading = false;
-                })
+                apiCaller.listarCompradores()
+                  .then((response) => this.response.compradores = response.data)
+                  .catch(() => {
+                      this.$toast.open({
+                          message: 'Houve um erro ao listar os compradores',
+                          type: 'error',
+                          position: 'top-right'
+                      });
+                  })
+                .finally(() => this.isLoading = false);
             }
         },
         created() {

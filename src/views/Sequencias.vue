@@ -12,10 +12,15 @@
             <div class="flex flex-wrap -mx-4 -mb-10 text-center">
                <div class="sm:w-1/2 mb-10 px-4">
                   <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Distribuição Igualitária</h2>
-                  <p class="leading-relaxed text-base">Distribui as sequências que não tem cliente associado entre o total de clientes de forma igualitária.</p>
+                  <p class="leading-relaxed text-base">Distribui as sequências que não tem cliente associado entre o
+                     total de clientes de forma igualitária.</p>
                   <p class="leading-relaxed text-base">Fórmula: Total de Jogos / Total de Clientes</p>
-                  <p class="leading-relaxed text-base text-gray-500">Ex: Se houver 10 clientes e 100 jogos, então cada cliente receberá 10 jogos.</p>
-                  <button @click="distribuirIgualmente" class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">Distribuir Igualmente</button>
+                  <p class="leading-relaxed text-base text-gray-500">Ex: Se houver 10 clientes e 100 jogos, então cada
+                     cliente receberá 10 jogos.</p>
+                  <button @click="distribuirIgualmente"
+                          class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">
+                     Distribuir Igualmente
+                  </button>
                </div>
                <div class="sm:w-1/2 mb-10 px-4">
                   <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Distribuição Avulsa</h2>
@@ -25,7 +30,10 @@
                          placeholder="Jogos por cliente"
                          v-model="qtdJogosPorPessoa"
                          type="number">
-                  <button @click="distribuirAvulso" class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">Distribuição avulsa</button>
+                  <button @click="distribuirAvulso"
+                          class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">
+                     Distribuição avulsa
+                  </button>
                </div>
             </div>
          </div>
@@ -46,18 +54,21 @@
                               class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">
                               #
                            </th>
-                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                           <th
+                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
                               Nome
                            </th>
-                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                           <th
+                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
                               Email
                            </th>
-                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                           <th
+                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
                               Jogos
                            </th>
-<!--                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">-->
-<!--                              Sequência-->
-<!--                           </th>-->
+                           <!--                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">-->
+                           <!--                              Sequência-->
+                           <!--                           </th>-->
                         </tr>
                         </thead>
                         <tbody>
@@ -68,14 +79,14 @@
                            <td>
                               <table class="table-auto w-full text-left whitespace-no-wrap">
                                  <thead>
-                                    <tr>
-                                       <td>Sequências</td>
-                                    </tr>
+                                 <tr>
+                                    <td>Sequências</td>
+                                 </tr>
                                  </thead>
                                  <tbody>
-                                    <tr v-for="(jogo, index) in p.jogos" :key="index">
-                                       <td v-if="jogo">{{ jogo.sequencia }}</td>
-                                    </tr>
+                                 <tr v-for="(jogo, index) in p.jogos" :key="index">
+                                    <td v-if="jogo">{{ jogo.sequencia }}</td>
+                                 </tr>
                                  </tbody>
                               </table>
                            </td>
@@ -92,7 +103,10 @@
                </div>
             </div>
             <div>
-               <button @click="confirmarDistribuicao" class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">Confirmar distribuição</button>
+               <button @click="confirmarDistribuicao"
+                       class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">
+                  Confirmar distribuição
+               </button>
             </div>
          </div>
       </section>
@@ -100,11 +114,11 @@
 </template>
 
 <script>
-    import axios from "axios";
+    import apiCaller from "../apiCaller";
 
     export default {
         name: "Sequencias",
-        data: function() {
+        data: function () {
             return {
                 qtdJogosPorPessoa: undefined,
                 mode: undefined,
@@ -125,42 +139,31 @@
         },
         methods: {
             async listarClientes() {
-                await axios.get("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/clientes", {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                    }
-                })
-                 .then((response) => {
-                     this.clientes = response.data;
-                 })
-                 .catch((error) => {
-                     console.log(error);
-                     this.$toast.open({
-                         message: 'Não foi possível obter os clientes',
-                         type: 'error',
-                         position: 'top-right'
-                     })
-                 })
+                await apiCaller.listarClientes()
+                    .then((response) => this.clientes = response.data)
+                    .catch((error) => {
+                        console.log(error);
+                        this.$toast.open({
+                            message: 'Não foi possível obter os clientes',
+                            type: 'error',
+                            position: 'top-right'
+                        })
+                    });
             },
             async listarJogosSemDono() {
-                await axios.get("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/listarJogosSemDono", {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                    }
-                })
-                 .then((response) => {
-                     this.jogosSemDono = response.data;
-                 })
-                 .catch((error) => {
-                     console.log(error);
-                     this.$toast.open({
-                         message: 'Não foi possível obter os jogos',
-                         type: 'error',
-                         position: 'top-right'
-                     })
-                 })
+                await apiCaller.listarJogosSemDono()
+                    .then((response) => this.jogosSemDono = response.data)
+                    .catch((error) => {
+                        console.log(error);
+                        this.$toast.open({
+                            message: 'Não foi possível obter os jogos',
+                            type: 'error',
+                            position: 'top-right'
+                        })
+                    });
             },
             async distribuirIgualmente() {
+
                 this.mode = 1;
                 await this.listarClientes();
                 await this.listarJogosSemDono();
@@ -193,7 +196,7 @@
                         };
 
                         for (let x = 0; x < qtdJogosPorCliente; x++) {
-                           cliente.jogos.push(this.jogosSemDono[countJogoVigente++]);
+                            cliente.jogos.push(this.jogosSemDono[countJogoVigente++]);
                         }
 
                         this.previa.push(cliente);
@@ -243,54 +246,45 @@
 
             confirmarDistribuicao() {
                 if (this.mode === 1) {
-
-                   if (this.jogosSemDono.length && this.clientes.length) {
-                       axios.post("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/distribuirJogosSemDono", undefined,{
-                           headers: {
-                               'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                           }
-                       })
-                           .then((response) => {
-                               console.log(response.data);
-                               this.$toast.open({
-                                   message: 'Distribuição realizada com sucesso!',
-                                   type: 'success',
-                                   position: 'top-right'
-                               })
-                           })
-                           .catch((error) => {
-                               console.log(error);
-                               this.$toast.open({
-                                   message: 'Erro ao realizar a distribuição.',
-                                   type: 'error',
-                                   position: 'top-right'
-                               })
-                           });
-                   }
+                    if (this.jogosSemDono.length && this.clientes.length) {
+                        apiCaller.distribuirJogosSemDono()
+                            .then((response) => {
+                                console.log(response.data);
+                                this.$toast.open({
+                                    message: 'Distribuição realizada com sucesso!',
+                                    type: 'success',
+                                    position: 'top-right'
+                                })
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                this.$toast.open({
+                                    message: 'Erro ao realizar a distribuição.',
+                                    type: 'error',
+                                    position: 'top-right'
+                                })
+                            });
+                    }
                 }
                 if (this.mode === 2) {
                     if (this.jogosSemDono.length && this.clientes.length) {
-                        axios.post("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/distribuirJogosSemDonoAvulso/" + this.qtdJogosPorPessoa, undefined,{
-                            headers: {
-                                'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                            }
-                        })
-                         .then((response) => {
-                             console.log(response.data);
-                             this.$toast.open({
-                                 message: 'Distribuição realizada com sucesso!',
-                                 type: 'success',
-                                 position: 'top-right'
-                             })
-                         })
-                         .catch((error) => {
-                             console.log(error);
-                             this.$toast.open({
-                                 message: 'Erro ao realizar a distribuição.',
-                                 type: 'error',
-                                 position: 'top-right'
-                             })
-                         });
+                        apiCaller.distribuirJogosSemDonoAvulso(this.qtdJogosPorPessoa)
+                            .then((response) => {
+                                console.log(response.data);
+                                this.$toast.open({
+                                    message: 'Distribuição realizada com sucesso!',
+                                    type: 'success',
+                                    position: 'top-right'
+                                })
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                this.$toast.open({
+                                    message: 'Erro ao realizar a distribuição.',
+                                    type: 'error',
+                                    position: 'top-right'
+                                })
+                            });
                     }
                 }
             }

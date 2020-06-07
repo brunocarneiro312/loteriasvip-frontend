@@ -24,8 +24,7 @@
 </template>
 
 <script>
-
-    import axios from 'axios';
+    import apiCaller from "../apiCaller";
 
     export default {
         name: "ListaJogosLotofacil",
@@ -38,17 +37,9 @@
             }
         },
         created() {
-            axios.get("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos/lotofacil", {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                }
-            })
-             .then((response) => {
-                 this.jogos = response.data;
-             })
-             .catch((error) => {
-                 this.response.error = error;
-             });
+            apiCaller.listJogosLotofacil()
+               .then((response) => this.jogos = response.data)
+               .catch((error) => this.response.error = error);
         }
     }
 </script>

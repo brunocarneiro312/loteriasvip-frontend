@@ -51,8 +51,7 @@
 </template>
 
 <script>
-
-    import axios from 'axios';
+    import apiCaller from "../apiCaller";
     import eventbus from "../eventbus";
 
     export default {
@@ -73,14 +72,14 @@
         methods: {
             login() {
                 this.isLoading = true;
-                axios.post('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/auth', this.request)
+                apiCaller.login(this.request)
                     .then((response) => {
                         if (!localStorage.tokenData) {
-                            localStorage.setItem('tokenData', response.data['token']);
-                            localStorage.setItem('userCodigo', response.data['codigo']);
-                            localStorage.setItem('userEmail', response.data['email']);
-                            localStorage.setItem('userRoles', response.data['role']);
-                            eventbus.$emit('loginEvent', true);
+                           localStorage.setItem('tokenData', response.data['token']);
+                           localStorage.setItem('userCodigo', response.data['codigo']);
+                           localStorage.setItem('userEmail', response.data['email']);
+                           localStorage.setItem('userRoles', response.data['role']);
+                           eventbus.emitLoginEvent();
                         }
                         this.$toast.open({
                             message: 'Usuário autenticado',
@@ -89,7 +88,8 @@
                         });
                     })
                     .catch((error) => {
-                        this.response.error = true;
+                        console.log(error);
+                        this.response.error = error;
                         this.response.errorCode = error.status;
                         this.$toast.open({
                             message: 'Erro de autenticação',
@@ -97,9 +97,7 @@
                             position: 'top-right'
                         });
                     })
-                    .finally(() => {
-                     this.isLoading = false;
-                    })
+                    .finally(() => this.isLoading = false);
             }
         }
     }

@@ -34,16 +34,12 @@
             </div>
          </div>
       </section>
-      <div>
-         {{ request }}
-      </div>
    </div>
 </template>
 
 <script>
-    import axios from "axios";
-
     import eventbus from "../eventbus";
+    import apiCaller from "../apiCaller";
 
     export default {
         name: "Cadastro",
@@ -67,23 +63,17 @@
         },
         methods: {
             cadastrar() {
-                axios.post('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/auth/cadastrar', this.request.cliente, {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                    }
-                })
-                    .then((response) => {
-                        this.response.msg = response.data;
-                        this.$router.push("/");
-                        this.$toast.open({
-                            message: 'Usuário cadastrado com sucesso!',
-                            type: 'success',
-                            position: 'top-right'
-                        });
-                    })
-                    .catch((error) => {
-                        this.response.msg = error;
-                    })
+                apiCaller.cadastrar(this.request.cliente)
+                  .then((response) => {
+                      this.response.msg = response.data;
+                      this.$router.push("/");
+                      this.$toast.open({
+                          message: 'Usuário cadastrado com sucesso!',
+                          type: 'success',
+                          position: 'top-right'
+                      });
+                  })
+                  .catch((error) => this.response.msg = error);
             }
         }
     }

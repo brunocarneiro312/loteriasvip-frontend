@@ -14,7 +14,7 @@
         methods: {
             logout() {
                 localStorage.removeItem('tokenData');
-                eventbus.$emit('logoutEvent');
+                eventbus.logoutEvent(undefined);
             }
         }
     }

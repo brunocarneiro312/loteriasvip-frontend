@@ -102,13 +102,15 @@
                </table>
             </div>
          </div>
+         <div>
+            {{ lotofacilFile }}
+         </div>
       </section>
    </div>
 </template>
 
 <script>
-
-    import axios from "axios";
+    import apiCaller from "../apiCaller";
 
     export default {
         name: "Jogos",
@@ -141,76 +143,67 @@
                 formData.append("file", this.lotofacilFile);
 
                 this.isLoading = true;
-                axios.post('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/upload/lotofacil', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                    }
-                }).then(() => {
-                    this.$toast.open({
-                        message: 'Arquivo importado com sucesso',
-                        type: 'success',
-                        position: 'top-right'
-                    });
-                    this.listarJogos();
-                }).catch(() => {
-                    this.$toast.open({
-                        message: 'Erro ao importar arquivo',
-                        type: 'error',
-                        position: 'top-right'
-                    });
-                }).finally(() => {
-                    this.isLoading = false;
-                })
+                apiCaller.uploadJogosLotofacil(formData)
+                    .then(() => {
+                        this.$toast.open({
+                            message: 'Arquivo importado com sucesso',
+                            type: 'success',
+                            position: 'top-right'
+                        });
+                        this.listarJogos();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$toast.open({
+                            message: 'Erro ao importar arquivo',
+                            type: 'error',
+                            position: 'top-right'
+                        });
+                    })
+                    .finally(() => this.isLoading = false);
             },
 
             importarLotomania() {
 
-                if (!this.lotomaniaFile)
+                if (!this.lotomaniaFile) {
                     return;
+                }
 
                 let formData = new FormData();
                 formData.append("file", this.lotomaniaFile);
 
                 this.isLoading = true;
-                axios.post('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/upload/lotomania', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                    }
-                }).then(() => {
-                    this.$toast.open({
-                        message: 'Arquivo importado com sucesso!',
-                        type: 'success',
-                        position: 'top-right'
-                    });
-                    this.listarJogos();
-                }).catch(() => {
-                    this.$toast.open({
-                        message: 'Erro ao importar arquivo',
-                        type: 'error',
-                        position: 'top-right'
-                    });
-                }).finally(() => {
-                    this.isLoading = false;
-                })
+
+                apiCaller.uploadJogosLotomania(formData)
+                    .then(() => {
+                        this.$toast.open({
+                            message: 'Arquivo importado com sucesso!',
+                            type: 'success',
+                            position: 'top-right'
+                        });
+                        this.listarJogos();
+                    })
+                    .catch(() => {
+                        this.$toast.open({
+                            message: 'Erro ao importar arquivo',
+                            type: 'error',
+                            position: 'top-right'
+                        });
+                    })
+                    .finally(() => this.isLoading = false);
             },
 
             listarJogos() {
-                axios.get('http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/jogos', {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
-                    }
-                }).then((response) => {
-                    this.response.jogos = response.data;
-                }).catch(() => {
-                    this.$toast.open({
-                        message: 'Houve um erro ao listar os jogos',
-                        type: 'error',
-                        position: 'top-right'
-                    });
-                })
+                apiCaller.listJogos()
+                  .then((response) => this.response.jogos = response.data)
+                  .catch((error) => {
+                      console.log(error);
+                      this.$toast.open({
+                          message: 'Houve um erro ao listar os jogos',
+                          type: 'error',
+                          position: 'top-right'
+                      });
+                  });
             },
 
             setLotofacilFile(event) {

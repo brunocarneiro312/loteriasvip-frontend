@@ -50,7 +50,7 @@
                 this.isAdmin = this.userRoles.includes('ROLE_ADMIN');
             }
 
-            eventbus.$on('loginEvent', () => {
+            eventbus.loginEvent(() => {
                 this.isUserLoggedIn = true;
                 this.userRoles = localStorage.getItem('userRoles');
                 this.userEmail = localStorage.getItem('userEmail');

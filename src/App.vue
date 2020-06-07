@@ -26,12 +26,12 @@
                this.isUserLoggedIn = true;
             }
 
-            eventbus.$on('loginEvent', (value) => {
+            eventbus.loginEvent((value) => {
                 this.userData = localStorage.getItem('userData');
                 this.isUserLoggedIn = value;
             });
 
-            eventbus.$on('logoutEvent', () => {
+            eventbus.logoutEvent(() => {
                 this.isUserLoggedIn = false;
             });
         }

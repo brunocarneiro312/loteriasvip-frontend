@@ -40,7 +40,7 @@
 
 <script>
 
-    import axios from 'axios';
+    import apiCaller from "../apiCaller";
 
     export default {
         name: "Clientes",
@@ -54,38 +54,32 @@
         },
         methods: {
             listClientes() {
-                axios.get("http://ec2-18-220-216-83.us-east-2.compute.amazonaws.com:8080/loteriasvip/api/v1/clientes", {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('tokenData')
+                apiCaller.listarClientes()
+                  .then((response) => this.clientes = response.data)
+                  .catch((error) => {
+                    switch (error.response.status) {
+                        case 401:
+                            this.$toast.open({
+                                message: 'Acesso não autorizado',
+                                type: 'error',
+                                position: 'top-right'
+                            });
+                            break;
+                        case 403:
+                            this.$toast.open({
+                                message: 'Privilégios insuficientes',
+                                type: 'error',
+                                position: 'top-right'
+                            });
+                            break;
+                        default:
+                            this.$toast.open({
+                                message: 'Houve um erro ao listar os clientes',
+                                type: 'error',
+                                position: 'top-right'
+                            });
                     }
-                })
-                    .then((response) => {
-                        this.clientes = response.data;
-                    })
-                    .catch((error) => {
-                        switch (error.response.status) {
-                            case 401:
-                                this.$toast.open({
-                                    message: 'Acesso não autorizado',
-                                    type: 'error',
-                                    position: 'top-right'
-                                });
-                                break;
-                            case 403:
-                                this.$toast.open({
-                                    message: 'Privilégios insuficientes',
-                                    type: 'error',
-                                    position: 'top-right'
-                                });
-                                break;
-                            default:
-                                this.$toast.open({
-                                    message: 'Houve um erro ao listar os clientes',
-                                    type: 'error',
-                                    position: 'top-right'
-                                });
-                        }
-                    })
+                });
             }
         },
         created() {

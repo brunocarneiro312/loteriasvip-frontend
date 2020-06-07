@@ -13,10 +13,16 @@ import Cadastro from "../views/Cadastro";
 import Sequencias from "../views/Sequencias";
 import MeusJogos from "../views/MeusJogos";
 import GerarSequencia from "../views/template/GerarSequencia";
+import PublicComponent from "../components/PublicComponent";
 
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/public',
+        name: 'Public',
+        component: PublicComponent
+    },
     {
         path: '/',
         name: 'Home',
