@@ -102,9 +102,6 @@
                </table>
             </div>
          </div>
-         <div>
-            {{ lotofacilFile }}
-         </div>
       </section>
    </div>
 </template>

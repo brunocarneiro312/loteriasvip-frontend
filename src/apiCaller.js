@@ -41,7 +41,8 @@ const root = {
             distribuirJogos: `${endpoint}/jogos/distribuirJogos`,
             listarJogosSemDono: `${endpoint}/jogos/listarJogosSemDono`,
             distribuirJogosSemDono: `${endpoint}/jogos/distribuirJogosSemDono`,
-            distribuirJogosSemDonoAvulso: `${endpoint}/jogos/distribuirJogosSemDonoAvulso/{qtd}`
+            distribuirJogosSemDonoAvulso: `${endpoint}/jogos/distribuirJogosSemDonoAvulso/{qtd}`,
+            solicitarSequencia: `${endpoint}/jogos/solicitarSequencia`
         },
         user: {
             save: `${endpoint}/user`,
@@ -186,6 +187,14 @@ const distribuirJogosSemDonoAvulso = (qtdJogosPorCliente) => {
     })
 };
 
+const solicitarSequencia = () => {
+    return axios.get(root.api.jogos.solicitarSequencia, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
 const login = (credentials) => {
     return axios.post(root.api.auth.login, credentials);
 };
@@ -219,6 +228,7 @@ export default {
     listarJogosSemDono: listarJogosSemDono,
     distribuirJogosSemDono: distribuirJogosSemDono,
     distribuirJogosSemDonoAvulso: distribuirJogosSemDonoAvulso,
+    solicitarSequencia: solicitarSequencia,
     login: login,
     refreshToken: refreshToken,
     cadastrar: cadastrar

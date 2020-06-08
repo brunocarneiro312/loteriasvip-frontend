@@ -12,7 +12,7 @@
             <router-link to="/clientes" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Clientes</router-link>
             <router-link to="/sequencias" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Sequências</router-link>
             <router-link to="/meus-jogos" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Meus Jogos</router-link>
-            <router-link to="/gerar-sequencia" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Gerar Sequência</router-link>
+            <router-link to="/gerar-sequencia" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Solicitar Sequência</router-link>
             <a href="" @click="logout" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Sair</a>
          </nav>
          <router-link to="/cadastro" v-if="!isUserLoggedIn"
