@@ -43,7 +43,7 @@
                   class="text-white bg-green-300 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg mt-3">
                   Aguarde...
                </button>
-               <a href="#" class="text-xs text-green-400 mt-3">Preciso de ajuda!</a>
+               <router-link to="/esqueci-senha" class="text-xs text-green-400 mt-3">Preciso de ajuda!</router-link>
             </div>
          </div>
       </section>

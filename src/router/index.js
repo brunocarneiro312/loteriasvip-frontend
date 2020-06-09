@@ -14,6 +14,7 @@ import Sequencias from "../views/Sequencias";
 import MeusJogos from "../views/MeusJogos";
 import GerarSequencia from "../views/template/GerarSequencia";
 import PublicComponent from "../components/PublicComponent";
+import EsqueciSenha from "../views/EsqueciSenha";
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,11 @@ const routes = [
         path: '/login',
         name: 'LoginForm',
         component: LoginForm
+    },
+    {
+        path: '/esqueci-senha',
+        name: 'EsqueciSenha',
+        component: EsqueciSenha
     },
     {
         path: '/jogos-lotofacil',
