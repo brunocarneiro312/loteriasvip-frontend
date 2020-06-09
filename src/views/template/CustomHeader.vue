@@ -15,7 +15,7 @@
             <router-link to="/gerar-sequencia" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Solicitar Sequência</router-link>
             <a href="" @click="logout" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Sair</a>
          </nav>
-         <router-link to="/cadastro" v-if="!isUserLoggedIn"
+         <router-link to="/cadastro" v-if="!isUserLoggedIn && !esconderBotaoCadastro"
                       class="inline-flex items-center bg-green-700 border-0 py-1 px-3 focus:outline-none hover:bg-green-600 rounded text-white mt-4 md:mt-0">
             Cadastre-se
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -23,7 +23,8 @@
                <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
          </router-link>
-         <span v-else class="text-green-500">{{ userEmail }}</span>
+         <span v-if="isUserLoggedIn" class="text-green-500">{{ userEmail }}</span>
+         <router-link to="/" v-if="esconderBotaoCadastro">Voltar</router-link>
       </div>
    </header>
 </template>
@@ -59,6 +60,10 @@
 
             eventbus.$on('esconderBotaoCadastro', () => {
                 this.esconderBotaoCadastro = true;
+            });
+
+            eventbus.$on('apresentarBotaoCadastrar', () => {
+                this.esconderBotaoCadastro = false;
             });
         },
         methods: {

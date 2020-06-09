@@ -116,6 +116,8 @@
                     this.getJogosCliente();
                 }
             });
+
+            eventbus.$emit('apresentarBotaoCadastrar');
         },
         methods: {
             getResumo() {
