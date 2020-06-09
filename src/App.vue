@@ -50,4 +50,8 @@
       box-sizing: border-box;
    }
 
+   button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+   }
 </style>

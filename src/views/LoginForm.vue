@@ -17,6 +17,7 @@
                <p class="mb-8 leading-relaxed"></p>
                <div class="flex justify-center">
                   <button
+                     v-if="false"
                      class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">
                      Saiba Mais
                   </button>
@@ -34,6 +35,7 @@
                   placeholder="" type="password" v-model="request.password">
                <button
                   v-if="!isLoading"
+                  :disabled="!request.username || !request.password"
                   class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg mt-3"
                   @click="login">Entrar
                </button>

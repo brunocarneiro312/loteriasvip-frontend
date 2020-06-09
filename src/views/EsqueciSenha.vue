@@ -9,9 +9,10 @@
          <label class="text-green-700">Confirme o e-mail</label>
          <input
             class="bg-white rounded border border-gray-400 focus:outline-none focus:border-green-500 text-base px-4 py-2 mb-4"
-            placeholder="" type="password" v-model="request.username">
+            placeholder="" type="email" v-model="confirmEmail">
          <button
             v-if="!isLoading"
+            :disabled="!request.username || !confirmEmail"
             class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg mt-3"
             @click="sendPasswordReset">Enviar
          </button>
@@ -33,6 +34,7 @@
         data() {
             return {
                 isLoading: undefined,
+                confirmEmail: undefined,
                 request: {
                     username: undefined,
                 }
