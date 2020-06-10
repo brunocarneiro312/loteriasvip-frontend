@@ -25,7 +25,8 @@ const root = {
                 compradores: `${endpoint}/upload/compradores`,
                 jogos: {
                     lotofacil: `${endpoint}/upload/lotofacil`,
-                    lotomania: `${endpoint}/upload/lotomania`
+                    lotomania: `${endpoint}/upload/lotomania`,
+                    megasena: `${endpoint}/upload/megasena`
                 }
             }
         },
@@ -100,6 +101,15 @@ const uploadJogosLotofacil = (file) => {
 
 const uploadJogosLotomania = (formData) => {
     return axios.post(root.api.file.upload.jogos.lotomania, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
+const uploadJogosMegasena = (formData) => {
+    return axios.post(root.api.file.upload.jogos.megasena, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${getToken()}`
@@ -218,6 +228,7 @@ export default {
     uploadCompradores: uploadCompradores,
     uploadJogosLotofacil: uploadJogosLotofacil,
     uploadJogosLotomania: uploadJogosLotomania,
+    uploadJogosMegasena: uploadJogosMegasena,
     getResumo: getResumo,
     listJogos: listJogos,
     listJogosLotofacil: listJogosLotofacil,

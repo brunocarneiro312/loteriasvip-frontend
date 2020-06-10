@@ -10,7 +10,7 @@
                   deve obedecer o template</p>
             </div>
             <div class="flex flex-wrap -m-4">
-               <div class="p-4 md:w-1/2 w-full">
+               <div class="p-4 md:w-1/3 w-full">
                   <div class="h-full p-8 rounded glass-container">
                      <h1 class="heading-text">Lotofacil</h1>
                      <div>
@@ -37,7 +37,7 @@
                      </div>
                   </div>
                </div>
-               <div class="p-4 md:w-1/2 w-full">
+               <div class="p-4 md:w-1/3 w-full">
                   <div class="h-full p-8 rounded glass-container">
                      <h1 class="heading-text">Lotomania</h1>
                      <div>
@@ -61,6 +61,33 @@
                      </div>
                      <div v-if="response.lotomania.msg">
                         {{ response.lotomania.msg }}
+                     </div>
+                  </div>
+               </div>
+               <div class="p-4 md:w-1/3 w-full">
+                  <div class="h-full p-8 rounded glass-container">
+                     <h1 class="heading-text">Megasena</h1>
+                     <div>
+                        <label class="file">
+                           <input type="file" name="file" class="inputfile" id="file-megasena" @change="setMegasenaFile"/>
+                        </label>
+                     </div>
+                     <div class="flex">
+                        <button
+                           v-if="!isLoading"
+                           @click="importarMegasena"
+                           class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg">
+                           Importar
+                        </button>
+                        <button
+                           v-if="isLoading"
+                           disabled="true"
+                           class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg">
+                           Carregando...
+                        </button>
+                     </div>
+                     <div v-if="response.megasena.msg">
+                        {{ response.megasena.msg }}
                      </div>
                   </div>
                </div>
@@ -116,11 +143,15 @@
                 isLoading: false,
                 lotofacilFile: undefined,
                 lotomaniaFile: undefined,
+                megasenaFile: undefined,
                 response: {
                     lotofacil: {
                         msg: undefined
                     },
                     lotomania: {
+                        msg: undefined
+                    },
+                    megasena: {
                         msg: undefined
                     },
                     jogos: [],
@@ -190,6 +221,36 @@
                     .finally(() => this.isLoading = false);
             },
 
+            importarMegasena() {
+
+                if (!this.megasenaFile) {
+                    return;
+                }
+
+                let formData = new FormData();
+                formData.append("file", this.megasenaFile);
+
+                this.isLoading = true;
+
+                apiCaller.uploadJogosMegasena(formData)
+                    .then(() => {
+                        this.$toast.open({
+                            message: 'Arquivo importado com sucesso!',
+                            type: 'success',
+                            position: 'top-right'
+                        });
+                        this.listarJogos();
+                    })
+                    .catch(() => {
+                        this.$toast.open({
+                            message: 'Erro ao importar arquivo',
+                            type: 'error',
+                            position: 'top-right'
+                        });
+                    })
+                    .finally(() => this.isLoading = false);
+            },
+
             listarJogos() {
                 apiCaller.listJogos()
                   .then((response) => this.response.jogos = response.data)
@@ -209,6 +270,10 @@
 
             setLotomaniaFile(event) {
                 this.lotomaniaFile = event.target.files[0];
+            },
+
+            setMegasenaFile(event) {
+                this.megasenaFile = event.target.files[0];
             }
         }
     }
