@@ -89,7 +89,7 @@
                 isUserLoggedIn: false,
             }
         },
-        created() {
+        mounted() {
             this.isUserLoggedIn = localStorage.getItem('tokenData');
             this.userEmail = localStorage.getItem('userEmail');
             this.userRoles = localStorage.getItem('userRoles');
@@ -127,7 +127,7 @@
                         this.response.qtdClientes = response.data['qtdClientes'];
                         this.response.qtdPremios = response.data['qtdPremios'];
                     })
-                    .error((error) => console.log(error));
+                    .catch((error) => console.log(error));
             },
             getJogosCliente() {
                 apiCaller.getJogosCliente()
