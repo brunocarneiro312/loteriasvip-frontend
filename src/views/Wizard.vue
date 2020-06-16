@@ -17,7 +17,7 @@
             <distribuicao :usuarios="request.compradores" :sequencias="request.jogos"></distribuicao>
          </tab-content>
          <tab-content title="Resumo">
-            Resumo
+            => {{ request.distribuicao }}
          </tab-content>
       </form-wizard>
    </div>

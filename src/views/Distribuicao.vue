@@ -37,14 +37,13 @@
                </div>
             </div>
          </div>
-         <div>
-            => {{ usuarios }}
-         </div>
       </section>
    </div>
 </template>
 
 <script>
+    import eventbus from "../eventbus";
+
     export default {
         name: "Distribuicao",
         props: {
@@ -68,6 +67,7 @@
 
                 // Seta modo de distribuição
                 this.mode = 1;
+                this.todosOsJogos = [];
 
                 // Armazena todos os jogos no mesmo array
                 this.sequencias.lotofacil.forEach(j => this.todosOsJogos.push(j));
@@ -92,6 +92,7 @@
                         }
                     });
 
+                    eventbus.$emit('distribuicao', this.usuarios);
                 }
                 // Caso contrário, um jogo para cada usuário até que os jogos acabem
                 else {
@@ -105,13 +106,15 @@
                             usuario.jogos.push(this.todosOsJogos.shift());
                         }
                     });
+
+                    eventbus.$emit('distribuicao', this.usuarios);
                 }
 
             },
             distribuirAvulso() {
 
-                console.log('sdfkljjfklsadjklfdsakl')
                 this.mode = 2;
+                this.todosOsJogos = [];
 
                 // Armazena todos os jogos no mesmo array
                 this.sequencias.lotofacil.forEach(j => this.todosOsJogos.push(j));
@@ -129,6 +132,8 @@
                         usuario.jogos.push(this.todosOsJogos.shift());
                     }
                 });
+
+                eventbus.$emit('distribuicao', this.usuarios);
             }
         }
     }
