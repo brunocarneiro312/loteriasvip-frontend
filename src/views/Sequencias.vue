@@ -1,7 +1,7 @@
 <template>
    <div id="compradores">
       <section class="text-gray-700 body-font">
-         <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+         <div class="container mx-auto flex px-5 items-center justify-center flex-col">
             <div class="text-center lg:w-2/3 w-full">
                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Distribuir Sequências</h1>
             </div>
@@ -38,78 +38,78 @@
             </div>
          </div>
       </section>
-      <section class="text-gray-700 body-font">
-         <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
-            <div class="text-center lg:w-2/3 w-full">
-               <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Prévia</h1>
-               <p class="leading-relaxed text-base">Visualize quais jogos serão enviados para quais clientes.</p>
-            </div>
-            <div class="mt-3">
-               <div v-if="previa.length">
-                  <div>
-                     <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">
-                        <thead>
-                        <tr>
-                           <th
-                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">
-                              #
-                           </th>
-                           <th
-                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
-                              Nome
-                           </th>
-                           <th
-                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
-                              Email
-                           </th>
-                           <th
-                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
-                              Jogos
-                           </th>
-                           <!--                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">-->
-                           <!--                              Sequência-->
-                           <!--                           </th>-->
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(p, index) in previa" :key="index">
-                           <td class="px-4 py-3">{{ index + 1 }}</td>
-                           <td class="px-4 py-3">{{ p.nome }}</td>
-                           <td class="px-4 py-3">{{ p.email }}</td>
-                           <td>
-                              <table class="table-auto w-full text-left whitespace-no-wrap">
-                                 <thead>
-                                 <tr>
-                                    <td>Sequências</td>
-                                 </tr>
-                                 </thead>
-                                 <tbody>
-                                 <tr v-for="(jogo, index) in p.jogos" :key="index">
-                                    <td v-if="jogo">{{ jogo.sequencia }}</td>
-                                 </tr>
-                                 </tbody>
-                              </table>
-                           </td>
-                        </tr>
-                        <tr v-if="!clientes.length">
-                           <td colspan="4">Não existem clientes cadastrados</td>
-                        </tr>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-               <div v-else>
-                  <span class="text-gray-500">Nenhum tipo de distribuição foi selecionado.</span>
-               </div>
-            </div>
-            <div>
-               <button @click="confirmarDistribuicao"
-                       class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">
-                  Confirmar distribuição
-               </button>
-            </div>
-         </div>
-      </section>
+<!--      <section class="text-gray-700 body-font">-->
+<!--         <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">-->
+<!--            <div class="text-center lg:w-2/3 w-full">-->
+<!--               <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Prévia</h1>-->
+<!--               <p class="leading-relaxed text-base">Visualize quais jogos serão enviados para quais clientes.</p>-->
+<!--            </div>-->
+<!--            <div class="mt-3">-->
+<!--               <div v-if="previa.length">-->
+<!--                  <div>-->
+<!--                     <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                           <th-->
+<!--                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">-->
+<!--                              #-->
+<!--                           </th>-->
+<!--                           <th-->
+<!--                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">-->
+<!--                              Nome-->
+<!--                           </th>-->
+<!--                           <th-->
+<!--                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">-->
+<!--                              Email-->
+<!--                           </th>-->
+<!--                           <th-->
+<!--                              class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">-->
+<!--                              Jogos-->
+<!--                           </th>-->
+<!--                           &lt;!&ndash;                           <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">&ndash;&gt;-->
+<!--                           &lt;!&ndash;                              Sequência&ndash;&gt;-->
+<!--                           &lt;!&ndash;                           </th>&ndash;&gt;-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr v-for="(p, index) in previa" :key="index">-->
+<!--                           <td class="px-4 py-3">{{ index + 1 }}</td>-->
+<!--                           <td class="px-4 py-3">{{ p.nome }}</td>-->
+<!--                           <td class="px-4 py-3">{{ p.email }}</td>-->
+<!--                           <td>-->
+<!--                              <table class="table-auto w-full text-left whitespace-no-wrap">-->
+<!--                                 <thead>-->
+<!--                                 <tr>-->
+<!--                                    <td>Sequências</td>-->
+<!--                                 </tr>-->
+<!--                                 </thead>-->
+<!--                                 <tbody>-->
+<!--                                 <tr v-for="(jogo, index) in p.jogos" :key="index">-->
+<!--                                    <td v-if="jogo">{{ jogo.sequencia }}</td>-->
+<!--                                 </tr>-->
+<!--                                 </tbody>-->
+<!--                              </table>-->
+<!--                           </td>-->
+<!--                        </tr>-->
+<!--                        <tr v-if="!clientes.length">-->
+<!--                           <td colspan="4">Não existem clientes cadastrados</td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                     </table>-->
+<!--                  </div>-->
+<!--               </div>-->
+<!--               <div v-else>-->
+<!--                  <span class="text-gray-500">Nenhum tipo de distribuição foi selecionado.</span>-->
+<!--               </div>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--               <button @click="confirmarDistribuicao"-->
+<!--                       class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded">-->
+<!--                  Confirmar distribuição-->
+<!--               </button>-->
+<!--            </div>-->
+<!--         </div>-->
+<!--      </section>-->
    </div>
 </template>
 

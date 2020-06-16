@@ -1,7 +1,7 @@
 <template>
    <div id="lista-compradores">
       <section class="text-gray-700 body-font">
-         <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+         <div class="container mx-auto flex px-5 items-center justify-center flex-col">
             <div class="text-center lg:w-2/3 w-full">
                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Importar lista de
                   clientes</h1>
@@ -16,11 +16,11 @@
                   </label>
                </div>
                <div class="flex justify-center">
-                  <button @click="importarCompradores"
-                          class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg" v-if="!isLoading">
+                  <button @click="importarClientes"
+                          class="inline-flex text-white bg-green-500 border-0 py-2 px-6 mb-5 focus:outline-none hover:bg-green-700 rounded text-lg" v-if="!isLoading">
                      Importar
                   </button>
-                  <button disabled="true" class="inline-flex text-white bg-green-300 border-0 py-2 px-6 focus:outline-none hover:bg-green-700 rounded text-lg" v-if="isLoading">
+                  <button disabled="true" class="inline-flex text-white bg-green-300 border-0 py-2 px-6 mb-5 focus:outline-none hover:bg-green-700 rounded text-lg" v-if="isLoading">
                      Carregando...
                   </button>
                </div>
@@ -71,6 +71,7 @@
 
 <script>
     import apiCaller from "../apiCaller";
+    import eventbus from "../eventbus";
 
     export default {
         name: "ListaCompradores",
@@ -132,6 +133,39 @@
                       });
                   })
                 .finally(() => this.isLoading = false);
+            },
+
+            importarClientes() {
+                if (!this.compradoresFile)
+                    return;
+
+                let formData = new FormData();
+                formData.append("file", this.compradoresFile);
+
+                this.isLoading = true;
+                apiCaller.importarClientes(formData)
+                    .then((response) => {
+                        // this.listarCompradores();
+                        this.response.compradores = response.data;
+                        eventbus.$emit('listaCompradores', this.response.compradores);
+                        this.$toast.open({message: 'Arquivo importado com sucesso!', type: 'success', position: 'top-right'})
+                    })
+                    .catch((error) => {
+                        switch (error.response.status) {
+                            case 401:
+                                this.$toast.open({message: 'Usuário não autenticado', type: 'error', position: 'top-right'});
+                                break;
+                            case 403:
+                                this.$toast.open({message: 'Privilégios insuficientes', type: 'error', position: 'top-right'});
+                                break;
+                            default:
+                                this.$toast.open({
+                                    message: 'Houve um erro ao importar arquivo de compradores',
+                                    type: 'error'
+                                });
+                        }
+                    })
+                    .finally(() => this.isLoading = false);
             }
         },
         created() {

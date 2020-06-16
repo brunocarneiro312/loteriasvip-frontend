@@ -18,7 +18,8 @@ const root = {
                 clientes: `${endpoint}/clientes`,
                 compradores: `${endpoint}/clientes/compradores`
             },
-            save: `${endpoint}/clientes`
+            save: `${endpoint}/clientes`,
+            importar: `${endpoint}/clientes/importar`,
         },
         file: {
             upload: {
@@ -75,6 +76,14 @@ const listarCompradores = () => {
 
 const salvarCliente = (cliente) => {
     return axios.post(root.api.cliente.save, cliente, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    });
+};
+
+const importarClientes = (file) => {
+    return axios.post(root.api.cliente.importar, file, {
         headers: {
             'Authorization': `Bearer ${getToken()}`
         }
@@ -225,6 +234,7 @@ export default {
     listarClientes: listarClientes,
     listarCompradores: listarCompradores,
     salvarCliente: salvarCliente,
+    importarClientes: importarClientes,
     uploadCompradores: uploadCompradores,
     uploadJogosLotofacil: uploadJogosLotofacil,
     uploadJogosLotomania: uploadJogosLotomania,

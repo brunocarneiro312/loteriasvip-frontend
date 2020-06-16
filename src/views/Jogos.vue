@@ -1,7 +1,7 @@
 <template>
    <div>
       <section class="text-gray-700 body-font">
-         <div class="container px-5 py-24 mx-auto">
+         <div class="container px-5 mx-auto">
             <div class="text-center mb-5">
                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Importar jogos</h1>
                <p class="mb-8 leading-relaxed">Selecione o arquivo contendo a lista de compradores para realizar a
@@ -97,7 +97,7 @@
       <section class="text-gray-700 body-font">
          <div class="container mx-auto flex items-center justify-center flex-col">
             <div style="overflow-x: auto; max-width: 80vw">
-               <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">
+               <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap mt-5">
                   <thead>
                   <tr>
                      <th
@@ -135,6 +135,7 @@
 
 <script>
     import apiCaller from "../apiCaller";
+    import eventbus from "../eventbus";
 
     export default {
         name: "Jogos",
@@ -172,13 +173,15 @@
 
                 this.isLoading = true;
                 apiCaller.uploadJogosLotofacil(formData)
-                    .then(() => {
+                    .then((response) => {
                         this.$toast.open({
                             message: 'Arquivo importado com sucesso',
                             type: 'success',
                             position: 'top-right'
                         });
-                        this.listarJogos();
+                        // this.listarJogos();
+                        this.response.lotofacil = response.data;
+                        eventbus.$emit('jogosLotofacil', this.response.lotofacil);
                     })
                     .catch((error) => {
                         console.log(error);
@@ -203,13 +206,15 @@
                 this.isLoading = true;
 
                 apiCaller.uploadJogosLotomania(formData)
-                    .then(() => {
+                    .then((response) => {
                         this.$toast.open({
                             message: 'Arquivo importado com sucesso!',
                             type: 'success',
                             position: 'top-right'
                         });
-                        this.listarJogos();
+                        // this.listarJogos();
+                        this.response.lotomania = response.data;
+                        eventbus.$emit('jogosLotomania', this.response.lotomania);
                     })
                     .catch(() => {
                         this.$toast.open({
@@ -233,13 +238,15 @@
                 this.isLoading = true;
 
                 apiCaller.uploadJogosMegasena(formData)
-                    .then(() => {
+                    .then((response) => {
                         this.$toast.open({
                             message: 'Arquivo importado com sucesso!',
                             type: 'success',
                             position: 'top-right'
                         });
-                        this.listarJogos();
+                        // this.listarJogos();
+                        this.response.megasena = response.data;
+                        eventbus.$emit('jogosMegasena', this.response.megasena);
                     })
                     .catch(() => {
                         this.$toast.open({
