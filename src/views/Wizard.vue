@@ -17,7 +17,48 @@
             <distribuicao :usuarios="request.compradores" :sequencias="request.jogos"></distribuicao>
          </tab-content>
          <tab-content title="Resumo">
-            => {{ request.distribuicao }}
+            <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap cli-table">
+               <thead>
+               <tr>
+                  <th
+                     class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">
+                     #
+                  </th>
+                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                     Nome
+                  </th>
+                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                     Email
+                  </th>
+                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
+                     Sequencias
+                  </th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr v-for="row in request.distribuicao" :key="row.email">
+                  <td class="px-4 py-3">{{ row.codigo }}</td>
+                  <td class="px-4 py-3">{{ row.nome }}</td>
+                  <td class="px-4 py-3">{{ row.email }}</td>
+                  <td class="px-4 py-3">
+                     <table v-if="row.jogos.length" class="seq-table">
+                        <thead>
+                           <tr>
+                              <th style="padding: 5px">Tipo</th>
+                              <th style="padding: 5px">Sequência</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr v-for="(jogo, index) in row.jogos" :key="index">
+                              <td style="padding: 5px">{{ jogo.tipoJogo }}</td>
+                              <td style="padding: 5px">{{ jogo.sequencia }}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </td>
+               </tr>
+               </tbody>
+            </table>
          </tab-content>
       </form-wizard>
    </div>
@@ -72,8 +113,15 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
    #wizard {
       margin: 0 15%;
+
+      .cli-table {
+         tr:nth-child(even) {
+            background: #f5f5f5;
+         }
+      }
+
    }
 </style>

@@ -70,9 +70,15 @@
                 this.todosOsJogos = [];
 
                 // Armazena todos os jogos no mesmo array
-                this.sequencias.lotofacil.forEach(j => this.todosOsJogos.push(j));
-                this.sequencias.lotomania.forEach(j => this.todosOsJogos.push(j));
-                this.sequencias.megasena.forEach(j => this.todosOsJogos.push(j));
+                if (this.sequencias.lotofacil.length) {
+                  this.sequencias.lotofacil.forEach(j => this.todosOsJogos.push(j));
+                }
+                if (this.sequencias.lotomania.length) {
+                  this.sequencias.lotomania.forEach(j => this.todosOsJogos.push(j));
+                }
+                if (this.sequencias.megasena.length) {
+                  this.sequencias.megasena.forEach(j => this.todosOsJogos.push(j));
+                }
 
                 // Obtém a quantidade total de jogos e total de usuários
                 let qtdJogos = this.todosOsJogos.length;
@@ -86,9 +92,16 @@
                     this.usuarios.forEach(usuario => {
 
                         usuario.jogos = [];
+
                         // armazena a quantidade de jogos por usuário
                         for (let i = 0; i < this.qtdJogosPorPessoa; i++) {
-                            usuario.jogos.push(this.todosOsJogos.shift());
+
+                            let jogo = this.todosOsJogos.shift();
+
+                            if (jogo && jogo.sequencia && jogo.sequencia.length) {
+                                usuario.jogos.push(jogo);
+                            }
+
                         }
                     });
 
@@ -103,7 +116,12 @@
                         usuario.jogos = [];
                         // armazena a quantidade de jogos por usuário
                         for (let i = 0; i < this.qtdJogosPorPessoa; i++) {
-                            usuario.jogos.push(this.todosOsJogos.shift());
+
+                            let jogo = this.todosOsJogos.shift();
+
+                            if (jogo && jogo.sequencia && jogo.sequencia.length) {
+                                usuario.jogos.push(jogo);
+                            }
                         }
                     });
 
@@ -120,8 +138,6 @@
                 this.sequencias.lotofacil.forEach(j => this.todosOsJogos.push(j));
                 this.sequencias.lotomania.forEach(j => this.todosOsJogos.push(j));
                 this.sequencias.megasena.forEach(j => this.todosOsJogos.push(j));
-
-                debugger
 
                 // Pra cada usuário
                 this.usuarios.forEach(usuario => {

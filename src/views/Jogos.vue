@@ -180,6 +180,7 @@
                             position: 'top-right'
                         });
                         // this.listarJogos();
+
                         this.response.lotofacil = response.data;
                         eventbus.$emit('jogosLotofacil', this.response.lotofacil);
                     })
