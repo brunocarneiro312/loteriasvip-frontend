@@ -70,6 +70,7 @@
     import Jogos from "./Jogos";
     import Distribuicao from "./Distribuicao";
     import eventbus from "../eventbus";
+    import apiCaller from "../apiCaller";
     export default {
         name: "Wizard",
         components: {Distribuicao, Jogos, ListaCompradores},
@@ -90,7 +91,24 @@
         },
         methods: {
             onComplete() {
-                alert('Finalizando');
+                apiCaller.distribuicao(this.request.distribuicao)
+                  .then(() => {
+                      this.$toast.open({
+                          message: 'Distribuição realizada!',
+                          type: 'success',
+                          position: 'top-right'
+                      });
+                      this.$router.push("/");
+
+                  })
+                  .catch((error) => {
+                      this.$toast.open({
+                          message: 'Erro ao realizar distribuição de jogos',
+                          type: 'error',
+                          position: 'top-right'
+                      });
+                      console.log(error);
+                  });
             }
         },
         created() {

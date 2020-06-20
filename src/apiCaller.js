@@ -41,6 +41,7 @@ const root = {
             cliente: `${endpoint}/jogos/cliente`,
             fazerJogo: `${endpoint}/jogos/fazerJogo`,
             distribuirJogos: `${endpoint}/jogos/distribuirJogos`,
+            distJogos: `${endpoint}/distribuicao`,
             listarJogosSemDono: `${endpoint}/jogos/listarJogosSemDono`,
             distribuirJogosSemDono: `${endpoint}/jogos/distribuirJogosSemDono`,
             distribuirJogosSemDonoAvulso: `${endpoint}/jogos/distribuirJogosSemDonoAvulso/{qtd}`,
@@ -182,6 +183,14 @@ const distribuirJogos = (distribuicao) => {
     })
 };
 
+const distribuicao = (distribuicao) => {
+    return axios.post(root.api.jogos.distJogos, distribuicao, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
 const listarJogosSemDono = () => {
     return axios.get(root.api.jogos.listarJogosSemDono, {
         headers: {
@@ -246,6 +255,7 @@ export default {
     getJogosCliente: getJogosCliente,
     fazerJogo: fazerJogo,
     distribuirJogos: distribuirJogos,
+    distribuicao: distribuicao,
     listarJogosSemDono: listarJogosSemDono,
     distribuirJogosSemDono: distribuirJogosSemDono,
     distribuirJogosSemDonoAvulso: distribuirJogosSemDonoAvulso,

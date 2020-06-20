@@ -7,10 +7,11 @@
          </a>
          <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
             <router-link to="/" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Início</router-link>
-            <router-link to="/compradores" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Importar clientes</router-link>
-            <router-link to="/jogos" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Importar Jogos</router-link>
-            <router-link to="/clientes" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Clientes</router-link>
-            <router-link to="/sequencias" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Sequências</router-link>
+            <router-link to="/wizard" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Importar</router-link>
+<!--            <router-link to="/compradores" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Importar clientes</router-link>-->
+<!--            <router-link to="/jogos" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Importar Jogos</router-link>-->
+<!--            <router-link to="/clientes" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Clientes</router-link>-->
+<!--            <router-link to="/sequencias" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Sequências</router-link>-->
             <router-link to="/meus-jogos" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Meus Jogos</router-link>
             <router-link to="/gerar-sequencia" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Solicitar Sequência</router-link>
             <a href="" @click="logout" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Sair</a>

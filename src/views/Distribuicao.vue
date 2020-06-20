@@ -69,7 +69,7 @@
                 this.mode = 1;
                 this.todosOsJogos = [];
 
-                // Armazena todos os jogos no mesmo array
+                // Armazena todos os jogos no mesmo arrayr
                 if (this.sequencias.lotofacil.length) {
                   this.sequencias.lotofacil.forEach(j => this.todosOsJogos.push(j));
                 }
@@ -86,7 +86,7 @@
 
                 // Se a quantidade de jogos for maior que a de usuários, divide jogos pelos usuários
                 if (qtdJogos > qtdUsuario) {
-                    this.qtdJogosPorPessoa = Math.round(qtdJogos / qtdUsuario);
+                    this.qtdJogosPorPessoa = Math.floor(qtdJogos / qtdUsuario);
 
                     // Pra cada usuário
                     this.usuarios.forEach(usuario => {
@@ -145,7 +145,11 @@
                     usuario.jogos = [];
                     // armazena a quantidade de jogos por usuário
                     for (let i = 0; i < this.qtdJogosPorPessoa; i++) {
-                        usuario.jogos.push(this.todosOsJogos.shift());
+                        let jogo = this.todosOsJogos.shift();
+
+                        if (jogo && jogo.sequencia && jogo.sequencia.length) {
+                            usuario.jogos.push(jogo);
+                        }
                     }
                 });
 
