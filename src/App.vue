@@ -1,5 +1,6 @@
 <template>
    <div id="app">
+      <Overlay v-if="overlay"></Overlay>
       <CustomHeader />
       <div>
          <router-view></router-view>
@@ -10,18 +11,19 @@
 <script>
     import eventbus from "./eventbus";
     import CustomHeader from "./views/template/CustomHeader";
+    import Overlay from "./components/Overlay";
 
     export default {
         name: 'App',
-        components: {CustomHeader},
+        components: {Overlay, CustomHeader},
         data: function () {
             return {
                 isUserLoggedIn: false,
                 userData: undefined,
+                overlay: false,
             }
         },
         created() {
-
             if (localStorage.getItem('tokenData')) {
                this.isUserLoggedIn = true;
             }
@@ -33,6 +35,10 @@
 
             eventbus.logoutEvent(() => {
                 this.isUserLoggedIn = false;
+            });
+
+            eventbus.$on('overlay', (isOverlay) => {
+                this.overlay = isOverlay
             });
         }
     }

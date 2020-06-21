@@ -16,6 +16,7 @@ import GerarSequencia from "../views/template/GerarSequencia";
 import PublicComponent from "../components/PublicComponent";
 import EsqueciSenha from "../views/EsqueciSenha";
 import Wizard from "../views/Wizard";
+import ListaJogos from "../views/ListaJogos";
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,11 @@ const routes = [
         path: '/jogos',
         name: 'Jogos',
         component: Jogos
+    },
+    {
+        path: '/lista-jogos',
+        name: 'ListaJogos',
+        component: ListaJogos
     },
     {
         path: '/sequencias',

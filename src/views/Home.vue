@@ -16,7 +16,7 @@
                         <img src="../assets/img/pencil.svg" alt="" width="60" class="mx-auto"
                              style="transform: rotate(45deg)">
                         <h2 class="title-font font-medium text-3xl text-gray-900">{{ response.qtdJogos || 0 }}</h2>
-                        <p class="leading-relaxed">Jogos</p>
+                        <router-link to="/lista-jogos" class="leading-relaxed">Jogos</router-link>
                      </div>
                   </div>
                   <div class="p-4 md:w-1/3 sm:w-1/2 w-full">
@@ -28,7 +28,7 @@
                            <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                         </svg>
                         <h2 class="title-font font-medium text-3xl text-gray-900">{{ response.qtdClientes || 0 }}</h2>
-                        <p class="leading-relaxed">Clientes</p>
+                        <router-link to="/clientes" class="leading-relaxed">Clientes</router-link>
                      </div>
                   </div>
                   <div class="p-4 md:w-1/3 sm:w-1/2 w-full text-center">

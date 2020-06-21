@@ -1,6 +1,6 @@
 <template>
    <div id="lista-compradores">
-      <section class="text-gray-700 body-font">
+      <section class="text-gray-700 body-font mb-5">
          <div class="container mx-auto flex px-5 items-center justify-center flex-col">
             <div class="text-center lg:w-2/3 w-full">
                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Importar lista de
@@ -30,7 +30,7 @@
             </div>
          </div>
       </section>
-      <section class="text-gray-700 body-font">
+      <section class="text-gray-700 body-font" v-if="false">
          <div class="container mx-auto flex items-center justify-center flex-col">
             <div style="overflow-x: auto; max-width: 80vw">
                <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">
@@ -123,6 +123,7 @@
 
             listarCompradores() {
                 this.isLoading = true;
+                eventbus.$emit('overlay', true);
                 apiCaller.listarCompradores()
                   .then((response) => this.response.compradores = response.data)
                   .catch(() => {
@@ -132,7 +133,10 @@
                           position: 'top-right'
                       });
                   })
-                .finally(() => this.isLoading = false);
+                .finally(() => {
+                    this.isLoading = false;
+                    eventbus.$emit('overlay', false);
+                });
             },
 
             importarClientes() {

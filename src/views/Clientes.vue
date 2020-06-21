@@ -41,6 +41,7 @@
 <script>
 
     import apiCaller from "../apiCaller";
+    import eventbus from "../eventbus";
 
     export default {
         name: "Clientes",
@@ -54,6 +55,7 @@
         },
         methods: {
             listClientes() {
+                eventbus.$emit('overlay', true);
                 apiCaller.listarClientes()
                   .then((response) => this.clientes = response.data)
                   .catch((error) => {
@@ -79,7 +81,7 @@
                                 position: 'top-right'
                             });
                     }
-                });
+                }).finally(() => eventbus.$emit('overlay', false));
             }
         },
         created() {

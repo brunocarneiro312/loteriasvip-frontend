@@ -1,6 +1,6 @@
 <template>
    <div>
-      <section class="text-gray-700 body-font">
+      <section class="text-gray-700 body-font mb-5">
          <div class="container px-5 mx-auto">
             <div class="text-center mb-5">
                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Importar jogos</h1>
@@ -94,7 +94,7 @@
             </div>
          </div>
       </section>
-      <section class="text-gray-700 body-font">
+      <section class="text-gray-700 body-font" v-if="false">
          <div class="container mx-auto flex items-center justify-center flex-col">
             <div style="overflow-x: auto; max-width: 80vw">
                <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap mt-5">
@@ -142,6 +142,9 @@
         data: function () {
             return {
                 isLoading: false,
+                isLotofacilImported: false,
+                isLotomaniaImported: false,
+                isMegasenaImported: false,
                 lotofacilFile: undefined,
                 lotomaniaFile: undefined,
                 megasenaFile: undefined,
@@ -179,6 +182,7 @@
                             type: 'success',
                             position: 'top-right'
                         });
+                        this.isLotofacilImported = true;
                         // this.listarJogos();
 
                         this.response.lotofacil = response.data;
@@ -214,6 +218,7 @@
                             position: 'top-right'
                         });
                         // this.listarJogos();
+                        this.isLotomaniaImported = true;
                         this.response.lotomania = response.data;
                         eventbus.$emit('jogosLotomania', this.response.lotomania);
                     })
@@ -246,6 +251,7 @@
                             position: 'top-right'
                         });
                         // this.listarJogos();
+                        this.isMegasenaImported = true;
                         this.response.megasena = response.data;
                         eventbus.$emit('jogosMegasena', this.response.megasena);
                     })

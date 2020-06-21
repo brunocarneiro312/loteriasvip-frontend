@@ -91,6 +91,7 @@
         },
         methods: {
             onComplete() {
+                eventbus.$emit('overlay', true);
                 apiCaller.distribuicao(this.request.distribuicao)
                   .then(() => {
                       this.$toast.open({
@@ -108,7 +109,8 @@
                           position: 'top-right'
                       });
                       console.log(error);
-                  });
+                  })
+                  .finally(() => eventbus.$emit('overlay', false));
             }
         },
         created() {
