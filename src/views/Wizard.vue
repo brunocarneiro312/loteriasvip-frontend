@@ -59,6 +59,13 @@
                </tr>
                </tbody>
             </table>
+            <div>
+               <button @click="exportarDistribuicao"
+                       class="flex mx-auto mt-6 text-white bg-blue-500 border-0 py-2 px-5 focus:outline-none hover:bg-blue-600 rounded">
+                  Exportar distribuição
+               </button>
+            </div>
+            <div>{{ request.distribuicao }}</div>
          </tab-content>
       </form-wizard>
    </div>
@@ -111,6 +118,30 @@
                       console.log(error);
                   })
                   .finally(() => eventbus.$emit('overlay', false));
+            },
+            exportarDistribuicao() {
+                apiCaller.exportarDistribuicao(this.request.distribuicao)
+                    .then((response) => {
+                        const url = window.URL.createObjectURL(new Blob([response.data]));
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.setAttribute('download', 'distribuicao.xlsx');
+                        document.body.appendChild(link);
+                        link.click();
+                        this.$toast.open({
+                            message: 'Arquivo exportado',
+                            type: 'success',
+                            position: 'top-right'
+                        });
+                    })
+                    .catch((error) => {
+                        this.$toast.open({
+                            message: 'Erro ao exportar arquivo',
+                            type: 'error',
+                            position: 'top-right'
+                        });
+                        console.log(error);
+                    });
             }
         },
         created() {

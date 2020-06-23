@@ -42,6 +42,7 @@ const root = {
             fazerJogo: `${endpoint}/jogos/fazerJogo`,
             distribuirJogos: `${endpoint}/jogos/distribuirJogos`,
             distJogos: `${endpoint}/distribuicao`,
+            exportarDistribuicao: `${endpoint}/distribuicao/exportar`,
             listarJogosSemDono: `${endpoint}/jogos/listarJogosSemDono`,
             distribuirJogosSemDono: `${endpoint}/jogos/distribuirJogosSemDono`,
             distribuirJogosSemDonoAvulso: `${endpoint}/jogos/distribuirJogosSemDonoAvulso/{qtd}`,
@@ -184,10 +185,20 @@ const distribuirJogos = (distribuicao) => {
 };
 
 const distribuicao = (distribuicao) => {
-    return axios.post(root.api.jogos.distJogos, distribuicao, {
+    return axios.get(root.api.jogos.distJogos, distribuicao, {
         headers: {
             'Authorization': `Bearer ${getToken()}`
         }
+    })
+};
+
+const exportarDistribuicao = (distribuicao) => {
+    return axios.post(root.api.jogos.exportarDistribuicao, distribuicao, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`,
+            'Content-Disposition': "attachment; filename=distribuicao.xlsx",
+        },
+        responseType: 'arraybuffer',
     })
 };
 
@@ -256,6 +267,7 @@ export default {
     fazerJogo: fazerJogo,
     distribuirJogos: distribuirJogos,
     distribuicao: distribuicao,
+    exportarDistribuicao: exportarDistribuicao,
     listarJogosSemDono: listarJogosSemDono,
     distribuirJogosSemDono: distribuirJogosSemDono,
     distribuirJogosSemDonoAvulso: distribuirJogosSemDonoAvulso,
