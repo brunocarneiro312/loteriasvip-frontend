@@ -65,7 +65,6 @@
                   Exportar distribuição
                </button>
             </div>
-            <div>{{ request.distribuicao }}</div>
          </tab-content>
       </form-wizard>
    </div>
@@ -106,8 +105,6 @@
                           type: 'success',
                           position: 'top-right'
                       });
-                      this.$router.push("/");
-
                   })
                   .catch((error) => {
                       this.$toast.open({

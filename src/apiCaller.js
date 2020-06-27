@@ -48,6 +48,16 @@ const root = {
             distribuirJogosSemDonoAvulso: `${endpoint}/jogos/distribuirJogosSemDonoAvulso/{qtd}`,
             solicitarSequencia: `${endpoint}/jogos/solicitarSequencia`
         },
+        notificacao: {
+            list: `${endpoint}/notificacao`,
+            get: `${endpoint}/notificacao/{id}`,
+            save: `${endpoint}/notificacao`,
+            update: `${endpoint}/notificacao`,
+            count: `${endpoint}/notificacao/count`,
+            countByCliente: `${endpoint}/notificacao/count/cliente`,
+            getNotificacaoByCliente: `${endpoint}/notificacao/cliente`,
+            marcar: `${endpoint}/notificacao/marcar`
+        },
         user: {
             save: `${endpoint}/user`,
             resetPassword: `${endpoint}/resetpassword`
@@ -128,6 +138,70 @@ const uploadJogosMegasena = (formData) => {
     })
 };
 
+const listNotificacao = () => {
+    return axios.get(root.api.notificacao.list, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
+const findNotificacao = () => {
+    return axios.get(root.api.notificacao.get, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
+const saveNotificacao = (notificacao) => {
+    return axios.post(root.api.notificacao.save, notificacao, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
+const updateNotificacao = (notificacao) => {
+    return axios.put(root.api.notificacao.save, notificacao, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
+const countNotificacao = () => {
+    return axios.get(root.api.notificacao.count, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
+const countNotificacaoByCliente = () => {
+    return axios.get(root.api.notificacao.countByCliente, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
+const getNotificacaoByCliente = () => {
+    return axios.get(root.api.notificacao.getNotificacaoByCliente, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+};
+
+const marcarNotificacaoVista = (id) => {
+    return axios.get(root.api.notificacao.marcar + "/" + id, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    })
+}
+
 const getResumo = () => {
     return axios.get(root.api.dashboard.resumo, {
         headers: {
@@ -185,7 +259,7 @@ const distribuirJogos = (distribuicao) => {
 };
 
 const distribuicao = (distribuicao) => {
-    return axios.get(root.api.jogos.distJogos, distribuicao, {
+    return axios.post(root.api.jogos.distJogos, distribuicao, {
         headers: {
             'Authorization': `Bearer ${getToken()}`
         }
@@ -260,6 +334,14 @@ export default {
     uploadJogosLotomania: uploadJogosLotomania,
     uploadJogosMegasena: uploadJogosMegasena,
     getResumo: getResumo,
+    listNotificacao: listNotificacao,
+    findNotificacao: findNotificacao,
+    saveNotificacao: saveNotificacao,
+    updateNotificacao: updateNotificacao,
+    countNotificacao: countNotificacao,
+    countNotificacaoByCliente: countNotificacaoByCliente,
+    getNotificacaoByCliente: getNotificacaoByCliente,
+    marcarNotificacaoVista: marcarNotificacaoVista,
     listJogos: listJogos,
     listJogosLotofacil: listJogosLotofacil,
     listJogosLotomania: listJogosLotomania,

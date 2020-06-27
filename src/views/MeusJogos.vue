@@ -1,10 +1,10 @@
 <template>
    <section class="text-gray-700 body-font">
-      <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+      <div class="container mx-auto flex px-5 py-5 items-center justify-center flex-col">
          <div class="text-center lg:w-2/3 w-full">
             <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Meus Jogos</h1>
          </div>
-         <div>
+         <div class="overflow-y-container">
             <table id="table-clientes" class="table-auto w-full text-left whitespace-no-wrap">
                <thead>
                <tr>
@@ -39,6 +39,7 @@
 <script>
 
     import apiCaller from "../apiCaller";
+    import eventbus from "../eventbus";
 
     export default {
         name: "MeusJogos",
@@ -53,10 +54,17 @@
             apiCaller.getJogosCliente()
                .then((response) => this.response.jogos = response.data)
                .catch((error) => console.log(error));
+
+            apiCaller.countNotificacaoByCliente()
+                .then((response) => eventbus.$emit('updateNotificacoes', response.data))
+                .catch((err) => console.log(err));
         }
     }
 </script>
 
 <style scoped>
-
+   .overflow-y-container {
+      max-width: 90%;
+      overflow-y: auto;
+   }
 </style>

@@ -28,6 +28,7 @@
 
 <script>
     import apiCaller from "../../apiCaller";
+    import eventbus from "../../eventbus";
 
     export default {
         name: "GerarSequencia",
@@ -52,6 +53,11 @@
                         this.$toast.open({message: error.response.data.message, type: 'error', position: 'top-right'})
                     })
             }
+        },
+        created() {
+            apiCaller.countNotificacaoByCliente()
+                .then((response) => eventbus.$emit('updateNotificacoes', response.data))
+                .catch((err) => console.log(err));
         }
     }
 </script>

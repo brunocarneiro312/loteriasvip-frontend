@@ -88,6 +88,10 @@
                             type: 'success',
                             position: 'top-right'
                         });
+
+                        apiCaller.countNotificacaoByCliente()
+                            .then((response) => eventbus.$emit('updateNotificacoes', response.data))
+                            .catch((err) => console.log(err));
                     })
                     .catch((error) => {
                         console.log(error);

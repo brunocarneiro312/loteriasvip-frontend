@@ -17,6 +17,7 @@ import PublicComponent from "../components/PublicComponent";
 import EsqueciSenha from "../views/EsqueciSenha";
 import Wizard from "../views/Wizard";
 import ListaJogos from "../views/ListaJogos";
+import Notificacao from "../views/Notificacao";
 
 Vue.use(VueRouter)
 
@@ -105,6 +106,11 @@ const routes = [
         path: '/wizard',
         name: 'Wizard',
         component: Wizard
+    },
+    {
+        path: '/notificacoes',
+        name: 'Notificacoes',
+        component: Notificacao
     },
 ]
 

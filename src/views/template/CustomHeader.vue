@@ -14,6 +14,7 @@
 <!--            <router-link to="/sequencias" v-if="isUserLoggedIn && isAdmin" class="mr-5 hover:text-gray-900">Sequências</router-link>-->
             <router-link to="/meus-jogos" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Meus Jogos</router-link>
             <router-link to="/gerar-sequencia" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Solicitar Sequência</router-link>
+            <router-link to="/notificacoes" v-if="isUserLoggedIn && !isAdmin" class="mr-5 hover:text-gray-900">Notificações ({{qtdNotificacoesNovas}})</router-link>
             <a href="" @click="logout" v-if="isUserLoggedIn" class="mr-5 hover:text-gray-900">Sair</a>
          </nav>
          <router-link to="/cadastro" v-if="!isUserLoggedIn && !esconderBotaoCadastro"
@@ -41,7 +42,8 @@
                 isUserLoggedIn: undefined,
                 userEmail: undefined,
                 isAdmin: false,
-                esconderBotaoCadastro: false
+                esconderBotaoCadastro: false,
+                qtdNotificacoesNovas: 0,
             }
         },
         created() {
@@ -66,6 +68,11 @@
             eventbus.$on('apresentarBotaoCadastrar', () => {
                 this.esconderBotaoCadastro = false;
             });
+
+            eventbus.$on('updateNotificacoes', (data) => {
+                this.qtdNotificacoesNovas = data;
+            })
+
         },
         methods: {
             goHome() {
