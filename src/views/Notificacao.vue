@@ -4,10 +4,6 @@
          <table id="table-clientes" class="table-auto w-full text-center whitespace-no-wrap mt-5">
             <thead>
             <tr>
-               <th
-                  class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 rounded-tl rounded-bl">
-                  #
-               </th>
                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">
                   Titulo
                </th>
@@ -20,8 +16,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(notificacao, index) in notificacoes" :key="notificacao.titulo">
-               <td class="px-4 py-3">{{ index }}</td>
+            <tr v-for="(notificacao) in notificacoes" :key="notificacao.dataHoraNotificacao" :class="notificacao.notificacaoVisualizada ? '' : 'new'">
                <td class="px-4 py-3">{{ notificacao.titulo }}</td>
                <td class="px-4 py-3">{{ notificacao.mensagem }}</td>
                <td class="px-4 py-3">{{ getDataHora(notificacao.dataHoraNotificacao) }}</td>
@@ -81,5 +76,7 @@
 </script>
 
 <style scoped>
-
+   .new {
+      background: #bff2d4;
+   }
 </style>
